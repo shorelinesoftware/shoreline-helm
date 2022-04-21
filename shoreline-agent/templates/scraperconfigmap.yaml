@@ -1,0 +1,247 @@
+apiVersion: v1
+data:
+  scraper.yml: |
+  {{- if .Values.scraperConfig.enable }}
+    {{- if or ( regexMatch "release-[3-9][0-9]?\\.[5-9][0-9]?\\.[2-9][0-9]" .Values.agent.resource.tag ) ( regexMatch "release-[3-9][0-9]?\\.[6-9][0-9]?\\.[0-9][0-9]?" .Values.agent.resource.tag ) }}
+      custom_metrics_scrape_configs:
+      - job_name: "statsd_server"
+        service_type: "statsd"
+        scrape_interval: 1s
+      scrape_configs:
+      - job_name: 'node-exporter'
+        kubernetes_sd_configs:
+        - role: endpoints
+          namespaces:
+            names:
+            - monitoring
+        resource_mapping_config:
+          mode: exporter
+          resource_types:
+          - host # default resource type, default value of __shoreline_rq_type__
+        relabel_configs:
+        - source_labels: [__meta_kubernetes_endpoints_name]
+          regex: node-exporter
+          action: keep
+        - target_label: __shoreline_rq_type
+          action: replace # its default value
+          replacement: host # host type, the resource will mapping the host id where the scraper is located at default.
+        metric_relabel_configs:
+        - source_labels: [__name__] # metric filter
+          action: keep
+          regex: (node_cpu_seconds_total|node_memory_MemFree_bytes|node_memory_Cached_bytes|node_memory_MemTotal_bytes|node_memory_Buffers_bytes|node_filesystem_avail_bytes|node_network_transmit_drop_total|node_network_transmit_packets_total|node_network_transmit_bytes_total|node_network_receive_packets_total|node_network_receive_bytes_total|node_disk_reads_completed_total|node_disk_writes_completed_total|node_disk_read_bytes_total|node_disk_written_bytes_total|node_vmstat_pgfault|node_vmstat_pgmajfault|node_vmstat_oom_kill|node_filesystem_free_bytes|node_filesystem_size_bytes|node_network_receive_errs_total|node_network_transmit_errs_total|node_network_receive_drop_total)
+      - job_name: 'cadvisor'
+        scrape_interval: 10s
+        honor_timestamps: false
+        scheme: https
+        metrics_path: /metrics/cadvisor
+        tls_config:
+          ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+        bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+        kubernetes_sd_configs:
+        - role: node
+        resource_mapping_config:
+          mode: metric
+          resource_types:
+          - pod
+          - container
+          default_resource_type: container # default resource type, default value of __shoreline_rq_type__
+        relabel_configs:
+        - action: labelmap
+          regex: __meta_kubernetes_node_label_(.+)
+        metric_relabel_configs:
+        - source_labels: [__name__] # metric filter
+          action: keep
+          regex: (container_cpu_usage_seconds_total|container_memory_usage_bytes|container_spec_cpu_quota|container_fs_limit_bytes|container_spec_memory_limit_bytes|container_network_receive_packets_dropped_total|container_network_transmit_packets_dropped_total|container_network_receive_bytes_total|container_network_transmit_bytes_total|container_memory_working_set_bytes)
+        - source_labels: [container]
+          target_label: __shoreline_rq_type
+          regex: (^$|^POD$)
+          action: replace
+          replacement: pod
+        - source_labels: [namespace]
+          target_label: __shoreline_rq_tags_namespace
+        - source_labels: [pod]
+          target_label: __shoreline_rq_tags_pod_name
+        - source_labels: [container]
+          regex: (^([^P]|P[^O]|PO[^D])+$)  # not empty or POD
+          target_label: __shoreline_rq_tags_container_name
+        - regex: (image|id|name|namespace|pod)
+          action: labeldrop
+      - job_name: 'kubelets'
+        scheme: https
+        metrics_path: /metrics
+        tls_config:
+          ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+        bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+        kubernetes_sd_configs:
+        - role: node
+        resource_mapping_config:
+          mode: metric
+          resource_types:
+          - pod # default resource type, default value of __shoreline_rq_type
+        relabel_configs:
+        - action: labelmap
+          regex: __meta_kubernetes_node_label_(.+)
+        metric_relabel_configs:
+        - source_labels: [__name__] # metric filter
+          action: keep
+          regex: (kubelet_volume_stats_available_bytes|kubelet_volume_stats_capacity_bytes)
+        - source_labels: [namespace]
+          target_label: __shoreline_rq_tags_namespace
+        - source_labels: [persistentvolumeclaim]
+          target_label: __shoreline_rq_tags_pvc_ # TODO:, promethues original rule does not allow regex for target_label
+      {{- if .Values.scraperConfig.exporters.scrapers.envoy.enabled }}
+      - job_name: 'envoy'
+        scrape_interval: 10s
+        metrics_path: /stats/prometheus
+        kubernetes_sd_configs:
+        - role: pod
+        resource_mapping_config:
+          mode: exporter
+          resource_types:
+          - pod
+        relabel_configs:
+        - source_labels: [__meta_kubernetes_pod_container_name]
+          action: keep
+          regex: istio-proxy
+        - source_labels: [__meta_kubernetes_pod_container_port_name]
+          action: keep
+          regex: '.*-envoy-prom'
+        - source_labels: [__address__, __meta_kubernetes_pod_container_port_number]
+          action: replace
+          target_label: __address__
+          regex: ([^:]+)(?::\d+)?;(\d+)
+          replacement: $1:$2
+        - source_labels: [__meta_kubernetes_namespace, __meta_kubernetes_pod_name]
+          separator: "."
+          action: replace
+          target_label: __shoreline_rq_name
+        metric_relabel_configs:
+        - source_labels: [__name__] # metric filter
+          action: keep
+          regex: (istio_request_duration_milliseconds_count|istio_request_duration_milliseconds_bucket)
+      {{- end }}
+    {{- else }}
+      scrape_configs:
+      - job_name: 'node-exporter'
+        kubernetes_sd_configs:
+        - role: endpoints
+          namespaces:
+            names:
+            - {{ .Values.scraperConfig.exporters.scrapers.node_exporter.namespace | quote }}
+        resource_mapping_config:
+          mode: exporter
+          resource_types:
+          - host # default resource type, default value of __shoreline_rq_type__
+        relabel_configs:
+        - source_labels: [__meta_kubernetes_endpoints_name]
+          regex: {{ .Values.scraperConfig.exporters.scrapers.node_exporter.regex | quote }}
+          action: keep
+        - target_label: __shoreline_rq_type
+          action: replace # its default value
+          replacement: host # host type, the resource will mapping the host id where the scraper is located at default.
+        metric_relabel_configs:
+        - source_labels: [__name__] # metric filter
+          action: keep
+          regex: (node_cpu_seconds_total|node_memory_MemFree_bytes|node_memory_Cached_bytes|node_memory_MemTotal_bytes|node_memory_Buffers_bytes|node_filesystem_avail_bytes|node_network_transmit_drop_total|node_network_transmit_packets_total|node_network_transmit_bytes_total|node_network_receive_packets_total|node_network_receive_bytes_total|node_load5|node_memory_MemAvailable_bytes|node_disk_reads_completed_total|node_disk_writes_completed_total|node_disk_read_bytes_total|node_disk_written_bytes_total|node_disk_read_time_seconds_total|node_disk_write_time_seconds_total|node_vmstat_pgfault|node_vmstat_pgmajfault|node_vmstat_oom_kill|node_filesystem_free_bytes|node_filesystem_size_bytes|node_network_receive_errs_total|node_network_transmit_errs_total|node_network_receive_drop_total)
+      - job_name: 'cadvisor'
+        honor_timestamps: false
+        scheme: https
+        metrics_path: /metrics/cadvisor
+        tls_config:
+        {{- if eq .Values.global.cloud_provider "azure" }}
+          insecure_skip_verify: true
+        {{- end }}
+          ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+        bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+        kubernetes_sd_configs:
+        - role: node
+        resource_mapping_config:
+          mode: metric
+          resource_types:
+          - pod
+          - container
+          default_resource_type: container # default resource type, default value of __shoreline_rq_type__
+        relabel_configs:
+        - action: labelmap
+          regex: __meta_kubernetes_node_label_(.+)
+        metric_relabel_configs:
+        - source_labels: [__name__] # metric filter
+          action: keep
+          regex: (container_cpu_usage_seconds_total|container_memory_usage_bytes|container_spec_cpu_quota|container_fs_limit_bytes|container_spec_memory_limit_bytes|container_network_receive_packets_dropped_total|container_network_transmit_packets_dropped_total|container_network_receive_bytes_total|container_network_transmit_bytes_total|container_fs_read_seconds_total|container_fs_reads_bytes_total|container_fs_reads_total|container_fs_write_seconds_total|container_fs_writes_merged_total|container_fs_writes_total|container_memory_working_set_bytes|container_fs_writes_bytes_total)
+        - source_labels: [container]
+          target_label: __shoreline_rq_type
+          regex: (^$|^POD$)
+          action: replace
+          replacement: pod
+        - source_labels: [namespace]
+          target_label: __shoreline_rq_tags_namespace
+        - source_labels: [pod]
+          target_label: __shoreline_rq_tags_pod_name
+        - source_labels: [container]
+          regex: (^([^P]|P[^O]|PO[^D])+$)  # not empty or POD
+          target_label: __shoreline_rq_tags_container_name
+        - regex: (image|id|name|namespace|pod)
+          action: labeldrop
+      - job_name: 'kubelets'
+        scheme: https
+        metrics_path: /metrics
+        tls_config:
+          ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+        bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+        kubernetes_sd_configs:
+        - role: node
+        resource_mapping_config:
+          mode: metric
+          resource_types:
+          - pod # default resource type, default value of __shoreline_rq_type
+        relabel_configs:
+        - action: labelmap
+          regex: __meta_kubernetes_node_label_(.+)
+        metric_relabel_configs:
+        - source_labels: [__name__] # metric filter
+          action: keep
+          regex: (kubelet_volume_stats_available_bytes|kubelet_volume_stats_capacity_bytes)
+        - source_labels: [namespace]
+          target_label: __shoreline_rq_tags_namespace
+        - source_labels: [persistentvolumeclaim]
+          target_label: __shoreline_rq_tags_pvc_ # TODO:, promethues original rule does not allow regex for target_label
+      {{- if .Values.scraperConfig.exporters.scrapers.envoy.enabled }}
+      - job_name: 'envoy'
+        scrape_interval: 10s
+        metrics_path: /stats/prometheus
+        kubernetes_sd_configs:
+        - role: pod
+        resource_mapping_config:
+          mode: exporter
+          resource_types:
+          - pod
+        relabel_configs:
+        - source_labels: [__meta_kubernetes_pod_container_name]
+          action: keep
+          regex: istio-proxy
+        - source_labels: [__meta_kubernetes_pod_container_port_name]
+          action: keep
+          regex: '.*-envoy-prom'
+        - source_labels: [__address__, __meta_kubernetes_pod_container_port_number]
+          action: replace
+          target_label: __address__
+          regex: ([^:]+)(?::\d+)?;(\d+)
+          replacement: $1:$2
+        - source_labels: [__meta_kubernetes_namespace, __meta_kubernetes_pod_name]
+          separator: "."
+          action: replace
+          target_label: __shoreline_rq_name
+        metric_relabel_configs:
+        - source_labels: [__name__] # metric filter
+          action: keep
+          regex: (istio_request_duration_milliseconds_count|istio_request_duration_milliseconds_bucket)
+      {{- end }}
+    {{- end }}
+    {{- if .Values.scraperConfig.exporters.customConfig }}
+    {{ toYaml .Values.scraperConfig.exporters.customConfig | nindent 6 }}
+    {{- end }}
+  {{- end }}
+kind: ConfigMap
+metadata:
+  name: scraper-config
+  namespace: {{ tpl .Values.global.namespace . }}

@@ -1,0 +1,192 @@
+apiVersion: apps/v1
+kind: {{ .Values.agent.resource.kind }}
+metadata:
+  labels:
+    k8s-app: {{ .Values.global.name }}
+  name: {{ .Values.global.name }}
+  namespace: {{ tpl .Values.global.namespace . }}
+spec:
+{{- if eq .Values.agent.resource.kind "Deployment" }}
+  replicas: {{ .Values.agent.resource.replicas }}
+{{- end }}
+  selector:
+    matchLabels:
+      app: {{ .Values.global.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.global.name }}
+{{- if .Values.agent.resource.podAnnotations }}
+      annotations:
+{{ toYaml .Values.agent.resource.podAnnotations | indent 8 }}
+{{- end }}
+    spec:
+      containers:
+        - env:
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+            - name: BACKEND_ADDRESS
+              value: {{ .Values.global.customer_endpoint }}
+            - name: NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+            - name: NODE_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
+            - name: SSH_USERNAME
+              value: {{ .Values.global.name }}
+            - name: SSH_PORT
+              value: "22"
+            - name: K8S_CACERT_PATH
+              value: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+            - name: K8S_TOKEN_PATH
+              value: /var/run/secrets/kubernetes.io/serviceaccount/token
+            - name: SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: customer-secret
+                  key: customer-secret
+            - name: SECRETS_DIRECTORY
+              value: "/agent/secrets"
+            - name: CUSTOMER_ID
+              value: {{ .Values.global.customer_id }}
+            - name: GODEBUG
+              value: madvdontneed=1
+            {{- $elixirLoggerLevelExists := false }}
+            {{- range $obj := .Values.agent.resource.environmentVariables }}
+              {{- if eq $obj.name "ELIXIR_LOGGER_LEVEL" }}
+                {{- $elixirLoggerLevelExists = true }}
+              {{- end }}
+            {{- end }}
+            {{- if eq $elixirLoggerLevelExists false  }}
+            - name: ELIXIR_LOGGER_LEVEL
+              value: "error"
+            {{- end }}
+{{- if .Values.agent.resource.environmentVariables }}
+{{ toYaml .Values.agent.resource.environmentVariables | indent 12 }}
+{{- end }}
+          image: >-
+            {{ .Values.agent.resource.image }}:{{  .Values.agent.resource.tag }}
+          name: {{ .Values.global.name }}
+          {{- if or ( regexMatch "release-[3-9][0-9]?\\.[2-9][0-9]?\\.[0-9][0-9]?" .Values.agent.resource.tag ) ( regexMatch "release-[3-9][0-9]?\\.[1-9][0-9]\\.[0-9][0-9]?" .Values.agent.resource.tag ) }}
+          readinessProbe:
+            exec:
+              command:
+                - "/agent/bin/health_check.sh"
+                - "/agent/healthy"
+                - "10"
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            exec:
+              command:
+                - "/agent/bin/health_check.sh"
+                - "/agent/healthy"
+                - "10"
+          {{- else }}
+          readinessProbe:
+            tcpSocket:
+              port: 5789
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            tcpSocket:
+              port: 5789
+            initialDelaySeconds: 15
+            periodSeconds: 20
+          {{- end }}
+          ports:
+            - containerPort: 5051
+              name: agent-opservice
+          resources:
+            limits:
+              cpu: {{ .Values.agent.resource.resources.limits.cpu | quote }}
+              memory: {{ .Values.agent.resource.resources.limits.memory | quote }}
+            requests:
+              cpu: {{ .Values.agent.resource.resources.requests.cpu | quote }}
+              memory: {{ .Values.agent.resource.resources.requests.memory | quote }}
+          {{- $varlog := .Values.agent.resource.volumeMounts.mountPaths.varlog }}
+          {{- $varlibdockercontainers := .Values.agent.resource.volumeMounts.mountPaths.varlibdockercontainers }}
+          {{- $caPemstore := .Values.agent.resource.volumeMounts.mountPaths.caPemstore }}
+          {{- $hostSshVolume := .Values.agent.resource.volumeMounts.mountPaths.hostSshVolume }}
+          {{- $scraperConfig := .Values.agent.resource.volumeMounts.mountPaths.scraperConfig }}
+          {{- if or (ne $varlog "disable") (ne $varlibdockercontainers "disable") (ne $caPemstore "disable") (ne $hostSshVolume "disable") (ne $scraperConfig "disable") }}
+          volumeMounts:
+            {{- if ne $varlog "disable" }}
+            - mountPath: {{ $varlog }}
+              name: varlog
+            {{- end }}
+            {{- if ne $varlibdockercontainers "disable" }}
+            - mountPath: {{ $varlibdockercontainers }}
+              name: varlibdockercontainers
+              readOnly: true
+            {{- end }}
+            {{- if ne $caPemstore "disable" }}
+            - mountPath: {{ $caPemstore }}
+              name: ca-pemstore
+              readOnly: false
+              subPath: ca.pem
+            {{- end }}
+            {{- if ne $hostSshVolume "disable" }}
+            - mountPath: {{ $hostSshVolume }}
+              name: host-ssh-volume
+              readOnly: true
+            {{- end }}
+            {{- if ne $scraperConfig "disable" }}
+            - mountPath: {{ $scraperConfig }}
+              name: scraper-config
+              subPath: scraper.yml
+            {{- end }}
+          {{- end }}
+      imagePullSecrets:
+        - name: {{ .Values.global.name }}-agent
+      serviceAccountName: {{ tpl .Values.global.namespace . }}-sa
+{{- if .Values.agent.resource.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.agent.resource.nodeSelector | indent 8 }}
+{{- end }}
+      terminationGracePeriodSeconds: 30
+      volumes:
+        {{- if ne $varlog "disable" }}
+        - hostPath:
+            path: {{ $varlog }}
+          name: varlog
+        {{- end }}
+        {{- if ne $varlibdockercontainers "disable" }}
+        - hostPath:
+            path: {{ $varlibdockercontainers }}
+          name: varlibdockercontainers
+        {{- end }}
+        - configMap:
+            name: ca-pemstore
+          name: ca-pemstore
+        - name: host-ssh-volume
+          hostPath:
+            path: /home/{{ .Values.global.name }}/.ssh
+            type: DirectoryOrCreate
+        - name: scraper-config
+          configMap:
+            name: scraper-config
+      {{- if eq .Values.agent.resource.kind "Deployment" }}
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchLabels:
+                app: {{ .Values.global.name }}
+            topologyKey: kubernetes.io/hostname
+      {{- end }}
+  {{- if eq .Values.agent.resource.kind "DaemonSet" }}
+  updateStrategy:
+    rollingUpdate:
+      maxUnavailable: 3
+    type: RollingUpdate
+  {{- end }}
