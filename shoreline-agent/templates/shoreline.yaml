@@ -6,9 +6,9 @@ metadata:
   name: {{ .Values.global.name }}
   namespace: {{ tpl .Values.global.namespace . }}
 spec:
-{{- if eq .Values.agent.resource.kind "Deployment" }}
+  {{- if eq .Values.agent.resource.kind "Deployment" }}
   replicas: {{ .Values.agent.resource.replicas }}
-{{- end }}
+  {{- end }}
   selector:
     matchLabels:
       app: {{ .Values.global.name }}
@@ -16,10 +16,10 @@ spec:
     metadata:
       labels:
         app: {{ .Values.global.name }}
-{{- if .Values.agent.resource.podAnnotations }}
+      {{- if .Values.agent.resource.podAnnotations }}
       annotations:
-{{ toYaml .Values.agent.resource.podAnnotations | indent 8 }}
-{{- end }}
+      {{ toYaml .Values.agent.resource.podAnnotations | nindent 8 }}
+      {{- end }}
     spec:
       containers:
         - env:
@@ -70,9 +70,9 @@ spec:
             - name: ELIXIR_LOGGER_LEVEL
               value: "error"
             {{- end }}
-{{- if .Values.agent.resource.environmentVariables }}
-{{ toYaml .Values.agent.resource.environmentVariables | indent 12 }}
-{{- end }}
+            {{- if .Values.agent.resource.environmentVariables }}
+            {{ toYaml .Values.agent.resource.environmentVariables | nindent 12 }}
+            {{- end }}
           image: >-
             {{ .Values.agent.resource.image }}:{{  .Values.agent.resource.tag }}
           name: {{ .Values.global.name }}
@@ -149,10 +149,10 @@ spec:
       imagePullSecrets:
         - name: {{ .Values.global.name }}-agent
       serviceAccountName: {{ tpl .Values.global.namespace . }}-sa
-{{- if .Values.agent.resource.nodeSelector }}
+      {{- if .Values.agent.resource.nodeSelector }}
       nodeSelector:
-{{ toYaml .Values.agent.resource.nodeSelector | indent 8 }}
-{{- end }}
+      {{ toYaml .Values.agent.resource.nodeSelector | nindent 8 }}
+      {{- end }}
       terminationGracePeriodSeconds: 30
       volumes:
         {{- if ne $varlog "disable" }}
