@@ -146,8 +146,10 @@ spec:
               subPath: scraper.yml
             {{- end }}
           {{- end }}
+      {{- if ne .Values.agent.resource.image "shorelinesoftware/agent" }}
       imagePullSecrets:
         - name: {{ .Values.global.name }}-agent
+      {{- end }}
       serviceAccountName: {{ tpl .Values.global.namespace . }}-sa
       {{- if .Values.agent.resource.nodeSelector }}
       nodeSelector:
