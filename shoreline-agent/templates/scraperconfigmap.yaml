@@ -20,7 +20,7 @@ data:
           - host # default resource type, default value of __shoreline_rq_type__
         relabel_configs:
         - source_labels: [__meta_kubernetes_endpoints_name]
-          regex: node-exporter
+          regex: {{ .Values.scraperConfig.exporters.scrapers.node_exporter.regex | quote }}
           action: keep
         - target_label: __shoreline_rq_type
           action: replace # its default value
