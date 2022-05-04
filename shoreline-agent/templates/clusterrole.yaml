@@ -38,6 +38,15 @@ rules:
   - list
   - patch
   - watch
+- apiGroups:
+  - apps
+  resources:
+  - daemonsets
+  resourceNames:
+  - shoreline
+  verbs:
+  - get
+  - patch
 {{- if .Values.clusterRoleRules }}
 {{ toYaml .Values.clusterRoleRules }}
 {{- end }}
