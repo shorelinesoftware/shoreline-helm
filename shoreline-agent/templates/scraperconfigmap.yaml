@@ -35,6 +35,9 @@ data:
         scheme: https
         metrics_path: /metrics/cadvisor
         tls_config:
+        {{- if eq .Values.global.cloud_provider "azure" }}
+          insecure_skip_verify: true
+        {{- end }}
           ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
         bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
         kubernetes_sd_configs:
@@ -144,6 +147,7 @@ data:
           action: keep
           regex: (node_cpu_seconds_total|node_memory_MemFree_bytes|node_memory_Cached_bytes|node_memory_MemTotal_bytes|node_memory_Buffers_bytes|node_filesystem_avail_bytes|node_network_transmit_drop_total|node_network_transmit_packets_total|node_network_transmit_bytes_total|node_network_receive_packets_total|node_network_receive_bytes_total|node_load5|node_memory_MemAvailable_bytes|node_disk_reads_completed_total|node_disk_writes_completed_total|node_disk_read_bytes_total|node_disk_written_bytes_total|node_disk_read_time_seconds_total|node_disk_write_time_seconds_total|node_vmstat_pgfault|node_vmstat_pgmajfault|node_vmstat_oom_kill|node_filesystem_free_bytes|node_filesystem_size_bytes|node_network_receive_errs_total|node_network_transmit_errs_total|node_network_receive_drop_total)
       - job_name: 'cadvisor'
+        scrape_interval: 10s
         honor_timestamps: false
         scheme: https
         metrics_path: /metrics/cadvisor
