@@ -90,6 +90,8 @@ spec:
                 - "/agent/bin/health_check.sh"
                 - "/agent/healthy"
                 - "10"
+            initialDelaySeconds: 15
+            periodSeconds: 20
           ports:
             - containerPort: 5051
               name: agent-opservice
