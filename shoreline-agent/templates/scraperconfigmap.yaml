@@ -119,7 +119,7 @@ data:
         regex: (istio_request_duration_milliseconds_count|istio_request_duration_milliseconds_bucket)
     {{- end }}
     {{- if .Values.scraperConfig.exporters.customConfig }}
-    {{ toYaml .Values.scraperConfig.exporters.customConfig | nindent 6 }}
+    {{ toYaml .Values.scraperConfig.exporters.customConfig | nindent 4 }}
     {{- end }}
   {{- end }}
 kind: ConfigMap
