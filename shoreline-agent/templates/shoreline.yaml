@@ -155,10 +155,12 @@ spec:
         - configMap:
             name: ca-pemstore
           name: ca-pemstore
+        {{- if ne $hostSshVolume "disable" }}
         - name: host-ssh-volume
           hostPath:
             path: /home/{{ .Values.global.name }}/.ssh
             type: DirectoryOrCreate
+        {{- end }}
         - name: scraper-config
           configMap:
             name: scraper-config
