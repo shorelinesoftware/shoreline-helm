@@ -1,0 +1,85 @@
+global:
+  name: "shoreline"
+  customer_id: "test"
+  customer_secret: "4EQGvhQZwzUx4bHZvZfvopc0AJSErUF3PoIBLGa2lEA"
+  customer_endpoint: "agent-gateway.shoreline-test5.io:443"
+  certificate: |
+    -----BEGIN CERTIFICATE-----
+    MIIDdjCCAl6gAwIBAgIUCkFDuc4WSjQcW2OA/tF2TNgJat4wDQYJKoZIhvcNAQEL
+    BQAwUzELMAkGA1UEBhMCVVMxDzANBgNVBAgTBk9yZWdvbjERMA8GA1UEBxMIUG9y
+    dGxhbmQxEzARBgNVBAoTCkt1YmVybmV0ZXMxCzAJBgNVBAsTAkNBMB4XDTIwMDEw
+    MzE4NTEwMFoXDTI1MDEwMTE4NTEwMFowUzELMAkGA1UEBhMCVVMxDzANBgNVBAgT
+    Bk9yZWdvbjERMA8GA1UEBxMIUG9ydGxhbmQxEzARBgNVBAoTCkt1YmVybmV0ZXMx
+    CzAJBgNVBAsTAkNBMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvnEl
+    u25KMEIkmfAGsyLP9qGrQ1wbD9hiQSuODw69NJb0TcjdGiuEJ6Zy/7LaxUvfPtY9
+    yCQj/fTpEUbx+rMhYjwq6oRr+dCOP/BTy+0g/ieVrRm73A2GMaK14kDT6QGDXCB0
+    W2DaUeQClNyPZNu33lA99vCjM3Nmh576hqCJd7LkwUV55S3TzQxMVv0gYgoh99yd
+    OEtLfcVTXk1ixXRLYVHYQi52bFeNYCNauC1aBMa56dPM3lMcNcX9foF2rT0bVTqE
+    zvQI7yZda6nT4IUuCD04ARgK+KyHA04vPpEWztBFSCkTytN0T4s3+eAgmf7DuZBU
+    koR6aCDTuhqqSai5BQIDAQABo0IwQDAOBgNVHQ8BAf8EBAMCAQYwDwYDVR0TAQH/
+    BAUwAwEB/zAdBgNVHQ4EFgQUrnJXFY+qSzmuhEde7HLEyKVD2pQwDQYJKoZIhvcN
+    AQELBQADggEBALDlpAlw/U9qdkb8vKKPlR1TmiJME/5L8hsi8ZlcBhmFEMyXiB/Y
+    VMBPpQUe8WrKff1xQMgyF1UKjJoVtNFpbx7m9UEEZ2Ji2IQTwnesQXDUXF/VlwBd
+    bmiZ8uRafPxOJiTN/iefaNcs7NE/rejqn8ADKXWN9oXlnu//ohwKIhIhbPFbHsHj
+    ROobsORt4LCjDUxUvuk4csyUckxnGkkGJw6UwvL3NKWEbIh1SpXuW7WixX3O1ZGz
+    +1b7K3Vy/0qNDtlaCpEsDDOciDuZnGrSrn3u18tNm78w1n+htBoFCLu49LlgJAex
+    cMVZTmnI/FgI+MGROXr0iinlcwQa7OkHLPQ=
+    -----END CERTIFICATE-----
+agent:
+  serviceaccount:
+    annotations:
+      iam-blab-bla: something
+  resource:
+    kind: "Deployment"
+    replicas: 6
+    image: "shorelinesoftware/agent"
+    tag: "release-3.5.27"
+    nodeSelector:
+      eks.amazonaws.com/nodegroup: ng-1
+    tolerations:
+    - key: node-role.kubernetes.io/control-plane
+      operator: Exists
+      effect: NoSchedule
+    - key: node-role.kubernetes.io/master
+      operator: Exists
+      effect: NoSchedule
+    podAnnotations:
+      foo: bar
+      bar: foo
+    environmentVariables:
+      - name: TEST_ENV_VAR
+        value: "test_env_var"
+scraperConfig:
+  enable: true
+  exporters:
+    scrapers:
+      node_exporter:
+        namespace: "monitoring"
+        regex: "node-exporter"
+      envoy:
+        enabled: true
+    customConfig:
+      - job_name: 'envoy1'
+        scrape_interval: 10s
+        metrics_path: /stats/prometheus
+        kubernetes_sd_configs:
+        - role: pod
+        resource_mapping_config:
+          mode: exporter
+          resource_types:
+          - pod
+        relabel_configs:
+        - source_labels: [__meta_kubernetes_pod_container_name]
+          action: keep
+          regex: istio-proxy
+        metric_relabel_configs:
+        - source_labels: [__name__]
+          action: keep
+          regex: (istio_request_duration_milliseconds_count|istio_request_duration_milliseconds_bucket)
+clusterRoleRules:
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  verbs:
+  - delete
