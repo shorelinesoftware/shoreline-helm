@@ -54,8 +54,6 @@ spec:
               value: "/agent/secrets"
             - name: CUSTOMER_ID
               value: {{ .Values.global.customer_id }}
-            - name: GODEBUG
-              value: madvdontneed=1
             {{- $elixirLoggerLevelExists := false }}
             {{- range $obj := .Values.agent.resource.environmentVariables }}
               {{- if eq $obj.name "ELIXIR_LOGGER_LEVEL" }}
