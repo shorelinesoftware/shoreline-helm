@@ -76,16 +76,18 @@ spec:
                 - "/agent/bin/health_check.sh"
                 - "/agent/healthy"
                 - "10"
-            initialDelaySeconds: 5
-            periodSeconds: 10
+            initialDelaySeconds: 180
+            periodSeconds: 120
+            timeoutSeconds: 60
           livenessProbe:
             exec:
               command:
                 - "/agent/bin/health_check.sh"
                 - "/agent/healthy"
                 - "10"
-            initialDelaySeconds: 15
-            periodSeconds: 20
+            initialDelaySeconds: 180
+            periodSeconds: 120
+            timeoutSeconds: 60
           ports:
             - containerPort: 5051
               name: agent-opservice
