@@ -9,11 +9,12 @@ agent:
   serviceaccount:
     irsa: false
     aws_role: ""
+    runAsNonRoot: false
   resource:
     kind: "DaemonSet"
     replicas: 1
     image: "shorelinesoftware/agent"
-    tag: "release-9.0.1"
+    tag: "release-9.0.21"
     resources:
       limits:
         cpu: "500m"
