@@ -130,6 +130,12 @@ spec:
               name: scraper-config
               subPath: scraper.yml
             {{- end }}
+            {{- if .Values.agent.serviceaccount.runAsNonRoot }}
+            - mountPath: /agent/secrets
+              name: cache-volume
+          securityContext:
+            runAsUser: 2000
+            {{- end }}
           {{- end }}
       {{- if ne .Values.agent.resource.image "shorelinesoftware/agent" }}
       imagePullSecrets:
@@ -168,6 +174,10 @@ spec:
         - name: scraper-config
           configMap:
             name: scraper-config
+        {{- if .Values.agent.serviceaccount.runAsNonRoot }}
+        - name: cache-volume
+          emptyDir: {}
+        {{- end }}
       {{- if eq .Values.agent.resource.kind "Deployment" }}
       affinity:
         podAntiAffinity:
