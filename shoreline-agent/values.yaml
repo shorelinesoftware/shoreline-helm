@@ -2,9 +2,12 @@ global:
   name: "shoreline"
   namespace: "{{ ternary \"shoreline\" .Release.Namespace (eq .Release.Namespace \"default\") }}"
   customer_id: ""
-  customer_secret: ""
+  customer_secret: "secret"
   customer_endpoint: ""
   cloud_provider: "aws"
+  certificate: |
+    -----BEGIN CERTIFICATE-----
+    -----END CERTIFICATE-----
 agent:
   serviceaccount:
     irsa: false
@@ -14,7 +17,7 @@ agent:
     kind: "DaemonSet"
     replicas: 1
     image: "shorelinesoftware/agent"
-    tag: "release-10.0.6"
+    tag: "release-10.0.13"
     resources:
       limits:
         cpu: "500m"
