@@ -42,7 +42,7 @@ rules:
   - apps
   resources:
   - daemonsets
-  {{- if eq .Values.agent.resource.kind "Statefulset" }}
+  {{- if eq .Values.agent.resource.kind "StatefulSet" }}
   - statefulsets
   {{- end }}
   resourceNames:

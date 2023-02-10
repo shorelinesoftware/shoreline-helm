@@ -1,7 +1,7 @@
 apiVersion: v1
 data:
   scraper.yml: |
-  {{- if eq .Values.agent.resource.kind "Statefulset" }}
+  {{- if eq .Values.agent.resource.kind "StatefulSet" }}
     resource_discovery_config:
       discover_scope: cluster
   {{- end }}

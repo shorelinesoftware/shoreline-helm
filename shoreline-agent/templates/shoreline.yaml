@@ -9,7 +9,7 @@ spec:
   {{- if eq .Values.agent.resource.kind "Deployment" }}
   replicas: {{ .Values.agent.resource.replicas }}
   {{- end }}
-  {{- if eq .Values.agent.resource.kind "Statefulset" }}
+  {{- if eq .Values.agent.resource.kind "StatefulSet" }}
   replicas: {{ .Values.agent.resource.replicas }}
   serviceName: {{ .Values.global.name }}
   {{- end }}
@@ -25,7 +25,7 @@ spec:
       {{ toYaml .Values.agent.resource.podAnnotations | nindent 8 }}
       {{- end }}
     spec:
-    {{- if eq .Values.agent.resource.kind "Statefulset" }}
+    {{- if eq .Values.agent.resource.kind "StatefulSet" }}
       affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
