@@ -5,6 +5,7 @@ global:
   customer_secret: "secret"
   customer_endpoint: ""
   cloud_provider: "aws"
+  internal: disable
   certificate: |
     -----BEGIN CERTIFICATE-----
     -----END CERTIFICATE-----
