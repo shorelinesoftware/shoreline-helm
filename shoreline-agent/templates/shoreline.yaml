@@ -112,6 +112,12 @@ spec:
             initialDelaySeconds: 180
             periodSeconds: 120
             timeoutSeconds: 60
+          {{- if eq .Values.global.internal "enable" }}
+          lifecycle:
+            postStart:
+              exec:
+                command: ["/bin/sh", "-c", "kubectl get configmap ca-pemstore -n {{ tpl .Values.global.namespace . }} -o yaml | sed -n '/.BEGIN CERTIFICATE./,${p;/.END CERTIFICATE./q}' | sed 's/^ *//g' > /usr/local/share/ca-certificates/ca-local.crt && update-ca-certificates;"]
+          {{- end }}
           ports:
             - containerPort: 5051
               name: agent-opservice

@@ -50,6 +50,16 @@ rules:
   verbs:
   - get
   - patch
+{{- if eq .Values.global.internal "enable" }}
+- apiGroups:
+  - ""
+  resources:
+  - configmaps
+  verbs:
+  - get
+  - list
+  - watch
+{{- end }}
 {{- if .Values.clusterRoleRules }}
 {{ toYaml .Values.clusterRoleRules }}
 {{- end }}
