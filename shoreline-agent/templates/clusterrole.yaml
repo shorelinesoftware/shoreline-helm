@@ -45,8 +45,6 @@ rules:
   {{- if eq .Values.agent.resource.kind "StatefulSet" }}
   - statefulsets
   {{- end }}
-  resourceNames:
-  - shoreline
   verbs:
   - get
   - patch
