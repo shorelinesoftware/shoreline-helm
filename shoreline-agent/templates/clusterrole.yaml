@@ -36,7 +36,6 @@ rules:
   verbs:
   - get
   - list
-  - patch
   - watch
 - apiGroups:
   - apps
@@ -47,7 +46,6 @@ rules:
   {{- end }}
   verbs:
   - get
-  - patch
 {{- if eq .Values.global.internal "enable" }}
 - apiGroups:
   - ""
