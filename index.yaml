@@ -2,8 +2,18 @@ apiVersion: v1
 entries:
   shoreline-agent:
   - apiVersion: v2
+    appVersion: 13.1.5
+    created: "2023-05-09T16:52:59.554335-04:00"
+    description: A Helm chart to deploy the Shoreline agent
+    digest: 267832d667ada4cbdeabdb6c26d98f9e985400bc824b80bba8f22abe6693ae3d
+    name: shoreline-agent
+    type: application
+    urls:
+    - https://raw.githubusercontent.com/shorelinesoftware/shoreline-helm/master/shoreline-agent-13.2.0.tgz
+    version: 13.2.0
+  - apiVersion: v2
     appVersion: 13.0.0
-    created: "2023-04-24T15:50:42.216015-04:00"
+    created: "2023-05-09T16:52:59.553422-04:00"
     description: A Helm chart to deploy the Shoreline agent
     digest: 0972acf4d516144f6e245e1b2146f69f4a91577db7cddbab47f683e5f96e9a63
     name: shoreline-agent
@@ -13,7 +23,7 @@ entries:
     version: 13.0.0
   - apiVersion: v2
     appVersion: 12.6.21
-    created: "2023-04-24T15:50:42.212399-04:00"
+    created: "2023-05-09T16:52:59.548145-04:00"
     description: A Helm chart to deploy the Shoreline agent
     digest: 5f33dc72d0aef8864bd0b73bf87e92ea019152be9b45f7eb6c6aff5d544ab5fb
     name: shoreline-agent
@@ -23,7 +33,7 @@ entries:
     version: 12.2.0
   - apiVersion: v2
     appVersion: 12.1.1
-    created: "2023-04-24T15:50:42.211613-04:00"
+    created: "2023-05-09T16:52:59.546697-04:00"
     description: A Helm chart to deploy the Shoreline agent
     digest: d1651b0247f13f647311f82762a0928b3064f6cd04f37841f7d5dddef3304a3b
     name: shoreline-agent
@@ -33,7 +43,7 @@ entries:
     version: 12.0.0
   - apiVersion: v2
     appVersion: 11.0.8
-    created: "2023-04-24T15:50:42.205939-04:00"
+    created: "2023-05-09T16:52:59.540112-04:00"
     description: A Helm chart to deploy the Shoreline agent
     digest: c47747a66d698f9cc9566a388c95794919d961c640ed4765cc4338fd063c56b3
     name: shoreline-agent
@@ -43,7 +53,7 @@ entries:
     version: 11.4.0
   - apiVersion: v2
     appVersion: 11.0.8
-    created: "2023-04-24T15:50:42.201093-04:00"
+    created: "2023-05-09T16:52:59.535039-04:00"
     description: A Helm chart to deploy the Shoreline agent
     digest: 8cf396102fd39681534237d9e900e45c580dfc12cf8337ab69b78e865e7da446
     name: shoreline-agent
@@ -53,7 +63,7 @@ entries:
     version: 11.2.0
   - apiVersion: v2
     appVersion: 11.0.6
-    created: "2023-04-24T15:50:42.196446-04:00"
+    created: "2023-05-09T16:52:59.530287-04:00"
     description: A Helm chart to deploy the Shoreline agent
     digest: ea5327384fe89ca3545b26203fb15efb616fd9fd8bd8f47b21908b2c6f01322a
     name: shoreline-agent
@@ -63,7 +73,7 @@ entries:
     version: 11.0.0
   - apiVersion: v2
     appVersion: 10.0.13
-    created: "2023-04-24T15:50:42.179091-04:00"
+    created: "2023-05-09T16:52:59.525472-04:00"
     description: A Helm chart to deploy the Shoreline agent
     digest: f7f8800f599a0a869d636d5d2f5f58d00f0f73637b449b3f0c3ad3e7a61befec
     name: shoreline-agent
@@ -73,7 +83,7 @@ entries:
     version: 10.1.0
   - apiVersion: v2
     appVersion: 10.0.6
-    created: "2023-04-24T15:50:42.173939-04:00"
+    created: "2023-05-09T16:52:59.506794-04:00"
     description: A Helm chart to deploy the Shoreline agent
     digest: cdaf48bd1388455fc7eb03d5201a4c60f440059ec581e7b2edab3d6042f25276
     name: shoreline-agent
@@ -83,7 +93,7 @@ entries:
     version: 10.0.0
   - apiVersion: v2
     appVersion: 9.0.25
-    created: "2023-04-24T15:50:42.311717-04:00"
+    created: "2023-05-09T16:52:59.680049-04:00"
     description: A Helm chart to deploy the Shoreline agent
     digest: f371c2e36385cf9421329d2017b11384028fa6b3a884c57c73610db74642434c
     name: shoreline-agent
@@ -93,7 +103,7 @@ entries:
     version: 9.1.0
   - apiVersion: v2
     appVersion: 9.0.1
-    created: "2023-04-24T15:50:42.306685-04:00"
+    created: "2023-05-09T16:52:59.674785-04:00"
     description: A Helm chart to deploy the Shoreline agent
     digest: e2a60f6fd6f088064f666d188408ab2f71dea2feebf1abd0075ca952f8f9373b
     name: shoreline-agent
@@ -103,7 +113,7 @@ entries:
     version: 9.0.0
   - apiVersion: v2
     appVersion: 8.0.22
-    created: "2023-04-24T15:50:42.300888-04:00"
+    created: "2023-05-09T16:52:59.655817-04:00"
     description: A Helm chart to deploy the Shoreline agent
     digest: 34a6143cf14bec3e289bfee643d5521602ca53ebff980be8b287b2077f96da79
     name: shoreline-agent
@@ -113,7 +123,7 @@ entries:
     version: 8.0.0
   - apiVersion: v2
     appVersion: 7.0.26
-    created: "2023-04-24T15:50:42.295784-04:00"
+    created: "2023-05-09T16:52:59.640441-04:00"
     description: A Helm chart to deploy the Shoreline agent
     digest: 7fc072f2f093b52042ffee8a656117b12f4d98efce35326b8afebf2ae8030292
     name: shoreline-agent
@@ -123,7 +133,7 @@ entries:
     version: 7.0.0
   - apiVersion: v2
     appVersion: 6.0.32
-    created: "2023-04-24T15:50:42.275944-04:00"
+    created: "2023-05-09T16:52:59.634979-04:00"
     description: A Helm chart to deploy the Shoreline agent
     digest: c8274ff2e62b6fd7dc344805bd1f71f6ced1220baa32e839b73f8da69f5744ad
     name: shoreline-agent
@@ -133,7 +143,7 @@ entries:
     version: 6.0.0
   - apiVersion: v2
     appVersion: 5.0.24
-    created: "2023-04-24T15:50:42.270996-04:00"
+    created: "2023-05-09T16:52:59.630398-04:00"
     description: A Helm chart to deploy the Shoreline agent
     digest: 696e9c98a5eb7d4a334dba4e60e5167ff3181ea4d5640f335c359cfd0bdd506c
     name: shoreline-agent
@@ -143,7 +153,7 @@ entries:
     version: 5.0.0
   - apiVersion: v2
     appVersion: 5.0.24
-    created: "2023-04-24T15:50:42.225998-04:00"
+    created: "2023-05-09T16:52:59.580015-04:00"
     description: A Helm chart to deploy the Shoreline agent
     digest: 5a4fdd68391a8289878288d93de16672fca84085ab6c38b7521acd5b65b865a9
     name: shoreline-agent
@@ -153,7 +163,7 @@ entries:
     version: 3.3.10
   - apiVersion: v2
     appVersion: 5.0.23
-    created: "2023-04-24T15:50:42.265603-04:00"
+    created: "2023-05-09T16:52:59.625207-04:00"
     description: A Helm chart to deploy the Shoreline agent
     digest: ed2e8eeeee5a1483a69643d1ec7f8fa606a846f05fece8bb96e8f2a18c2548cf
     name: shoreline-agent
@@ -163,7 +173,7 @@ entries:
     version: 3.3.9
   - apiVersion: v2
     appVersion: 5.0.12
-    created: "2023-04-24T15:50:42.260635-04:00"
+    created: "2023-05-09T16:52:59.604883-04:00"
     description: A Helm chart to deploy the Shoreline agent
     digest: aae4583a09c03cc62f01c842a17a9435f5054322e54c83e06c44da6786eb19ce
     name: shoreline-agent
@@ -173,7 +183,7 @@ entries:
     version: 3.3.8
   - apiVersion: v2
     appVersion: 5.0.12
-    created: "2023-04-24T15:50:42.255514-04:00"
+    created: "2023-05-09T16:52:59.594837-04:00"
     description: A Helm chart to deploy the Shoreline agent
     digest: 3a253033093684bcb2975d768170b7bc05e7ccb9c85d2a93e9c7f099468ded38
     name: shoreline-agent
@@ -183,7 +193,7 @@ entries:
     version: 3.3.7
   - apiVersion: v2
     appVersion: 4.0.26
-    created: "2023-04-24T15:50:42.25095-04:00"
+    created: "2023-05-09T16:52:59.589982-04:00"
     description: A Helm chart to deploy the Shoreline agent
     digest: 473286f42444d2869bac5d1afa67c68b4e85b4e7da6a3f5d3b1e3865de4e9b0a
     name: shoreline-agent
@@ -193,7 +203,7 @@ entries:
     version: 3.3.6
   - apiVersion: v2
     appVersion: 3.5.27
-    created: "2023-04-24T15:50:42.245631-04:00"
+    created: "2023-05-09T16:52:59.584679-04:00"
     description: A Helm chart to deploy the Shoreline agent
     digest: dc9e46fa91c62be3efe171c7be892032c9bdf48d77471a549a6f9a02a720892c
     name: shoreline-agent
@@ -203,7 +213,7 @@ entries:
     version: 3.3.5
   - apiVersion: v2
     appVersion: 3.5.27
-    created: "2023-04-24T15:50:42.220607-04:00"
+    created: "2023-05-09T16:52:59.574384-04:00"
     description: A Helm chart to deploy the Shoreline agent
     digest: 49d9b92213d4f2b517141fcb2d2b0655348543d9e02afd9852c9ec214c948274
     name: shoreline-agent
@@ -213,7 +223,7 @@ entries:
     version: 2.3.5
   - apiVersion: v2
     appVersion: 3.5.27
-    created: "2023-04-24T15:50:42.168723-04:00"
+    created: "2023-05-09T16:52:59.501631-04:00"
     description: A Helm chart to deploy the Shoreline agent
     digest: 1f2721f0023f9be0b5719130bd8095e908ac53cea8086aef09637719be58881b
     name: shoreline-agent
@@ -223,7 +233,7 @@ entries:
     version: 1.3.5
   - apiVersion: v2
     appVersion: 3.5.27
-    created: "2023-04-24T15:50:42.163884-04:00"
+    created: "2023-05-09T16:52:59.496976-04:00"
     description: A Helm chart to deploy the Shoreline agent
     digest: b70c2e7782fed7823fb335f4473c43d3e21d6f7d531ba93c356a7d6df9f09665
     name: shoreline-agent
@@ -233,7 +243,7 @@ entries:
     version: 0.3.5
   - apiVersion: v2
     appVersion: 3.4.23
-    created: "2023-04-24T15:50:42.158591-04:00"
+    created: "2023-05-09T16:52:59.487534-04:00"
     description: A Helm chart to deploy the Shoreline agent
     digest: b630ffa2c33de330a9327d1fb3cb42cfa2966e86aa1a783712de85000fea06de
     name: shoreline-agent
@@ -243,7 +253,7 @@ entries:
     version: 0.3.4
   - apiVersion: v2
     appVersion: 3.3.53
-    created: "2023-04-24T15:50:42.15417-04:00"
+    created: "2023-05-09T16:52:59.482672-04:00"
     description: A Helm chart to deploy the Shoreline agent
     digest: c04de2d3a3ef55a8ef42c4609ede1203bffcb9b2a060deee33605b1520d381f8
     name: shoreline-agent
@@ -251,4 +261,4 @@ entries:
     urls:
     - https://raw.githubusercontent.com/shorelinesoftware/shoreline-helm/master/shoreline-agent-0.3.3.tgz
     version: 0.3.3
-generated: "2023-04-24T15:50:42.149074-04:00"
+generated: "2023-05-09T16:52:59.477217-04:00"
