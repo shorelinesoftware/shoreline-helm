@@ -10,7 +10,9 @@ spec:
   replicas: {{ .Values.agent.resource.replicas }}
   {{- end }}
   {{- if eq .Values.agent.resource.kind "StatefulSet" }}
+  {{- if ne .Values.agent.resource.hpa "enable" }}
   replicas: {{ .Values.agent.resource.replicas }}
+  {{- end }}
   serviceName: {{ .Values.global.name }}
   {{- end }}
   selector:
@@ -223,3 +225,38 @@ spec:
       maxUnavailable: 3
     type: RollingUpdate
   {{- end }}
+{{- if eq .Values.agent.resource.hpa "enable" }}
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ .Values.global.name }}
+  namespace: {{ tpl .Values.global.namespace . }}
+spec:
+  maxReplicas: 6
+  metrics:
+  - resource:
+      name: cpu
+      target:
+        averageUtilization: 80
+        type: Utilization
+    type: Resource
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 81
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: 300
+      policies:
+      - type: Percent
+        value: 100
+        periodSeconds: 15
+  minReplicas: 2
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: StatefulSet
+    name: {{ .Values.global.name }}
+{{- end }}
