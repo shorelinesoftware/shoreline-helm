@@ -5,28 +5,16 @@ metadata:
   name: {{ .Values.global.name }}
   namespace: {{ tpl .Values.global.namespace . }}
 spec:
-  maxReplicas: 6
+  minReplicas: {{ .Values.agent.resource.hpaValues.minReplicas }}
+  maxReplicas: {{ .Values.agent.resource.hpaValues.maxReplicas }}
   metrics:
-  - resource:
-      name: cpu
-      target:
-        averageUtilization: 80
-        type: Utilization
-    type: Resource
-  - type: Resource
-    resource:
-      name: memory
-      target:
-        type: Utilization
-        averageUtilization: 81
+    {{- if .Values.agent.resource.hpaValues.metrics }}
+    {{ toYaml .Values.agent.resource.hpaValues.metrics | nindent 2 }}
+    {{- end }}
   behavior:
-    scaleDown:
-      stabilizationWindowSeconds: 300
-      policies:
-      - type: Percent
-        value: 100
-        periodSeconds: 15
-  minReplicas: 2
+    {{- if .Values.agent.resource.hpaValues.behavior }}
+    {{ toYaml .Values.agent.resource.hpaValues.behavior | nindent 4 }}
+    {{- end }}
   scaleTargetRef:
     apiVersion: apps/v1
     kind: StatefulSet

@@ -17,7 +17,6 @@ agent:
   resource:
     kind: "DaemonSet"
     replicas: 1
-    hpa: "disable"
     image: "shorelinesoftware/agent"
     tag: "release-13.1.22"
     resources:
@@ -34,6 +33,30 @@ agent:
         caPemstore: "/agent/secrets/ca_cert.crt"
         hostSshVolume: "/agent/.host_ssh"
         scraperConfig: "/agent/etc/scraper.yml"
+    hpa: "disable"
+    hpaValues:
+      minReplicas: 2
+      maxReplicas: 6
+      metrics:
+      - resource:
+          name: cpu
+          target:
+            type: Utilization
+            averageUtilization: 80
+        type: Resource
+      - resource:
+          name: memory
+          target:
+            type: Utilization
+            averageUtilization: 80
+        type: Resource
+      behavior:
+        scaleDown:
+          stabilizationWindowSeconds: 300
+          policies:
+          - type: Percent
+            value: 100
+            periodSeconds: 15
 scraperConfig:
   enable: true
   exporters:
