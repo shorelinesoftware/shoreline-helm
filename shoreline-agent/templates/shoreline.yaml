@@ -138,7 +138,8 @@ spec:
           {{- $caPemstore := .Values.agent.resource.volumeMounts.mountPaths.caPemstore }}
           {{- $hostSshVolume := .Values.agent.resource.volumeMounts.mountPaths.hostSshVolume }}
           {{- $scraperConfig := .Values.agent.resource.volumeMounts.mountPaths.scraperConfig }}
-          {{- if or (ne $varlog "disable") (ne $varlibdockercontainers "disable") (ne $caPemstore "disable") (ne $hostSshVolume "disable") (ne $scraperConfig "disable") }}
+          {{- $onpremDataVolume  := .Values.agent.resource.volumeMounts.mountPaths.bareMetalDataVolume }}
+          {{- if or (ne $varlog "disable") (ne $varlibdockercontainers "disable") (ne $caPemstore "disable") (ne $hostSshVolume "disable") (ne $scraperConfig "disable") (ne $onpremDataVolume "disable") }}
           volumeMounts:
             {{- if ne $varlog "disable" }}
             - mountPath: {{ $varlog }}
@@ -164,6 +165,11 @@ spec:
             - mountPath: {{ $scraperConfig }}
               name: scraper-config
               subPath: scraper.yml
+            {{- end }}
+            {{- if ne $onpremDataVolume "disable" }}
+            - mountPath: {{ $onpremDataVolume }}
+              name: onprem-data-volume
+              readOnly: false
             {{- end }}
             {{- if .Values.agent.serviceaccount.runAsNonRoot }}
             - mountPath: /agent/secrets
@@ -212,6 +218,12 @@ spec:
         {{- if .Values.agent.serviceaccount.runAsNonRoot }}
         - name: cache-volume
           emptyDir: {}
+        {{- end }}
+        {{- if ne $onpremDataVolume "disable" }}
+        - name: onprem-data-volume
+          hostPath:
+            path: {{ $onpremDataVolume }}
+            type: DirectoryOrCreate
         {{- end }}
       {{- if eq .Values.agent.resource.kind "Deployment" }}
       affinity:
