@@ -18,7 +18,7 @@ agent:
     kind: "DaemonSet"
     replicas: 1
     image: "shorelinesoftware/agent"
-    tag: "release-14.0.0"
+    tag: "release-14.0.23"
     resources:
       limits:
         cpu: "500m"
@@ -33,6 +33,7 @@ agent:
         caPemstore: "/agent/secrets/ca_cert.crt"
         hostSshVolume: "/agent/.host_ssh"
         scraperConfig: "/agent/etc/scraper.yml"
+        bareMetalDataVolume: "disable" # /agent/onprem
     hpa: "disable"
     hpaValues:
       minReplicas: 2
