@@ -18,7 +18,7 @@ agent:
     kind: "DaemonSet"
     replicas: 1
     image: "shorelinesoftware/agent"
-    tag: "release-14.0.23"
+    tag: "release-15.0.0"
     resources:
       limits:
         cpu: "500m"
