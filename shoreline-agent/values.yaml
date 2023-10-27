@@ -4,7 +4,7 @@ global:
   customer_id: ""
   customer_secret: "secret"
   customer_endpoint: ""
-  cloud_provider: "aws"
+  cloud_provider: "aws" # aws/azure/gcp
   internal: disable
   certificate: |
     -----BEGIN CERTIFICATE-----
@@ -18,7 +18,7 @@ agent:
     kind: "DaemonSet"
     replicas: 1
     image: "shorelinesoftware/agent"
-    tag: "release-15.0.0"
+    tag: "release-x.x.x"
     resources:
       limits:
         cpu: "500m"
