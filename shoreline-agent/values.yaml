@@ -58,6 +58,7 @@ agent:
           - type: Percent
             value: 100
             periodSeconds: 15
+  priorityClassName: ""
 scraperConfig:
   enable: true
   exporters:

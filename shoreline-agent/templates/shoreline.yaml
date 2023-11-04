@@ -178,6 +178,9 @@ spec:
             runAsUser: 2000
             {{- end }}
           {{- end }}
+      {{- if .Values.agent.priorityClassName }}
+      priorityClassName: {{ .Values.agent.priorityClassName }}
+      {{- end }}
       {{- if ne .Values.agent.resource.image "shorelinesoftware/agent" }}
       imagePullSecrets:
         - name: {{ .Values.global.name }}-agent
