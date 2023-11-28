@@ -3,4 +3,4 @@ appVersion: 17.0.0
 description: A Helm chart to deploy the Shoreline agent
 name: shoreline-agent
 type: application
-version: 17.0.0
+version: 17.1.0
