@@ -181,7 +181,7 @@ spec:
       {{- if .Values.agent.priorityClassName }}
       priorityClassName: {{ .Values.agent.priorityClassName }}
       {{- end }}
-      {{- if ne .Values.agent.resource.image "shorelinesoftware/agent" }}
+      {{- if .Values.agent.resource.imageCredentials }}
       imagePullSecrets:
         - name: {{ .Values.global.name }}-agent
       {{- end }}
@@ -240,7 +240,7 @@ spec:
   {{- if eq .Values.agent.resource.kind "DaemonSet" }}
   updateStrategy:
     rollingUpdate:
-      maxUnavailable: 3
+      maxUnavailable: 10
     type: RollingUpdate
   {{- end }}
   
