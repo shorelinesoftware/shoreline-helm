@@ -14,6 +14,9 @@ agent:
     irsa: false
     aws_role: ""
     runAsNonRoot: false
+  # podLabels:
+  #   name1: value1
+  #   name2: value2
   resource:
     kind: "DaemonSet"
     replicas: 1

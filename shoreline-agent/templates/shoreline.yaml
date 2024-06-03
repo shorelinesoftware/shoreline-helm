@@ -22,6 +22,9 @@ spec:
     metadata:
       labels:
         app: {{ .Values.global.name }}
+        {{- with .Values.agent.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
       {{- if .Values.agent.resource.podAnnotations }}
       annotations:
       {{ toYaml .Values.agent.resource.podAnnotations | nindent 8 }}
