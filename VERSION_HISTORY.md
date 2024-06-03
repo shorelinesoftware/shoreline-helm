@@ -1,3 +1,10 @@
+21.0.0
+- No change
+
+17.3.0
+- custom tags for agent pod can be added:
+  .Values.agent.podLabels
+
 20.0.0
 - No change
 
