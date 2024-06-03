@@ -52,16 +52,6 @@ entries:
     - https://raw.githubusercontent.com/shorelinesoftware/shoreline-helm/master/shoreline-agent-17.3.0.tgz
     version: 17.3.0
   - apiVersion: v2
-    appVersion: 17.3.0
-    created: "2024-06-03T16:46:08.037637-04:00"
-    description: A Helm chart to deploy the Shoreline agent
-    digest: cb9fbdb3437d58b8862bd492d4606c2ad279b8715ff9c8eeb4cc963c899e68b9
-    name: shoreline-agent
-    type: application
-    urls:
-    - https://raw.githubusercontent.com/shorelinesoftware/shoreline-helm/master/shoreline-agent-17.3.0-cp.tgz
-    version: 17.3.0
-  - apiVersion: v2
     appVersion: 17.2.0
     created: "2024-06-03T16:46:08.036443-04:00"
     description: A Helm chart to deploy the Shoreline agent
