@@ -6,9 +6,9 @@ global:
   customer_endpoint: ""
   cloud_provider: "aws" # aws/azure/gcp
   internal: disable
-  certificate: |
-    -----BEGIN CERTIFICATE-----
-    -----END CERTIFICATE-----
+  # certificate: |
+  #   -----BEGIN CERTIFICATE-----
+  #   -----END CERTIFICATE-----
 agent:
   serviceaccount:
     irsa: false

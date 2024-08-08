@@ -153,11 +153,13 @@ spec:
               name: varlibdockercontainers
               readOnly: true
             {{- end }}
-            {{- if ne $caPemstore "disable" }}
+            {{- if .Values.global.certificate }}
+              {{- if ne $caPemstore "disable" }}
             - mountPath: {{ $caPemstore }}
               name: ca-pemstore
               readOnly: false
               subPath: ca.pem
+              {{- end }}
             {{- end }}
             {{- if ne $hostSshVolume "disable" }}
             - mountPath: {{ $hostSshVolume }}
@@ -209,9 +211,11 @@ spec:
             path: {{ $varlibdockercontainers }}
           name: varlibdockercontainers
         {{- end }}
+        {{- if .Values.global.certificate }}
         - configMap:
             name: ca-pemstore
           name: ca-pemstore
+        {{- end }}
         {{- if ne $hostSshVolume "disable" }}
         - name: host-ssh-volume
           hostPath:

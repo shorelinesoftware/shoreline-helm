@@ -1,8 +1,18 @@
+
+26.1.0
+- Certificate is optional
+
 26.0.0
 - No change
 
+25.1.0
+- Certificate is optional
+
 25.0.0
 - No change
+
+24.1.0
+- Certificate is optional
 
 24.0.0
 - No change
