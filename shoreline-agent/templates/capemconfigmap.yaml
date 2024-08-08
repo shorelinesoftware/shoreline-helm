@@ -1,8 +1,10 @@
+{{- if .Values.global.certificate }}
 apiVersion: v1
 data:
   ca.pem: |
-    {{ required "A valid .Values.global.certificate entry required!" .Values.global.certificate | nindent 4 }}
+    {{ .Values.global.certificate | nindent 4 }}
 kind: ConfigMap
 metadata:
   name: ca-pemstore
   namespace: {{ tpl .Values.global.namespace . }}
+{{- end }}
