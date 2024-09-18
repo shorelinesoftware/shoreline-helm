@@ -42,6 +42,26 @@ spec:
                   - {{ .Values.global.name }}
             topologyKey: "kubernetes.io/hostname"
     {{- end }}
+    {{- if eq .Values.agent.resource.hostAction "enable" }}
+      initContainers:
+        - image: ubuntu:20.04
+          name: node-initializer
+          command: ["/scripts/entrypoint.sh"]
+          env:
+            - name: ROOT_MOUNT_DIR
+              value: /root
+            - name: NODE_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
+          securityContext:
+            privileged: true
+          volumeMounts:
+            - name: root-mount
+              mountPath: /root
+            - name: entrypoint
+              mountPath: /scripts
+    {{- end }}
       containers:
         - env:
             - name: POD_IP
@@ -234,6 +254,15 @@ spec:
           hostPath:
             path: {{ $onpremDataVolume }}
             type: DirectoryOrCreate
+        {{- end }}
+        {{- if eq .Values.agent.resource.hostAction "enable" }}
+        - name: root-mount
+          hostPath:
+            path: /
+        - name: entrypoint
+          configMap:
+            name: entrypoint
+            defaultMode: 0744
         {{- end }}
       {{- if eq .Values.agent.resource.kind "Deployment" }}
       affinity:

@@ -1,9 +1,18 @@
 
+27.0.0
+- No change
+
+26.2.0
+- Host level action is added by default
+
 26.1.0
 - Certificate is optional
 
 26.0.0
 - No change
+
+25.2.0
+- Host level action is added by default
 
 25.1.0
 - Certificate is optional
