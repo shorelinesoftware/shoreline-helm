@@ -1,0 +1,51 @@
+{{- if eq .Values.agent.resource.hostAction "enable" }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: entrypoint
+  namespace: shoreline
+  labels:
+    app: default-init
+data:
+  entrypoint.sh: |
+    #!/usr/bin/env bash
+
+    set -euo pipefail
+
+    DEBIAN_FRONTEND=noninteractive
+    ROOT_MOUNT_DIR="${ROOT_MOUNT_DIR:-/root}"
+    NODE_IP="${NODE_IP}"
+
+    # We use chroot to run the following commands in the host root (mounted as the /root volume in the container)
+    chroot "${ROOT_MOUNT_DIR}" /bin/bash <<"EOT"
+    #!/bin/bash
+
+    SSH_USERNAME=shoreline
+    SSH_DIR=/home/$SSH_USERNAME/.ssh
+    SSH_PORT=22
+
+    # Create .ssh
+    [ ! -d "$SSH_DIR" ] && mkdir /home/$SSH_USERNAME && mkdir $SSH_DIR
+    chmod 700 $SSH_DIR
+
+    CHECK_USER_CREATED=`grep $SSH_USERNAME /etc/passwd`
+    if [ -z "$CHECK_USER_CREATED" ]; then
+        useradd --system --home /home/$SSH_USERNAME --shell /bin/bash $SSH_USERNAME
+    else
+        echo "SSH user already created."
+    fi
+
+    if [ "$(ls -A $SSH_DIR)" ]; then
+        rm $SSH_DIR/*
+    fi
+    # Create public and private key and save them asccordingly
+    ssh-keygen -t rsa -b 2048 -f "$SSH_DIR/privatekey.pem" -q -N ""
+    chmod 400 "$SSH_DIR/privatekey.pem"
+    cat "$SSH_DIR/privatekey.pem.pub" >> "$SSH_DIR/authorized_keys"
+    chmod 600 "$SSH_DIR/authorized_keys"
+    EOT
+
+    chroot "${ROOT_MOUNT_DIR}" /bin/bash -c "ssh-keyscan -p 22 "${NODE_IP}" >> /home/shoreline/.ssh/known_hosts"
+    chroot "${ROOT_MOUNT_DIR}" /bin/bash -c "chown shoreline -R /home/shoreline/.ssh"
+    echo "Created ssh keys."
+{{- end }}
