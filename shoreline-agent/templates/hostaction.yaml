@@ -43,6 +43,7 @@ data:
     chmod 400 "$SSH_DIR/privatekey.pem"
     cat "$SSH_DIR/privatekey.pem.pub" >> "$SSH_DIR/authorized_keys"
     chmod 600 "$SSH_DIR/authorized_keys"
+    bash -c "echo '"${SSH_USERNAME}"   ALL=(ALL:ALL) NOPASSWD:ALL' > /etc/sudoers.d/99-shoreline-user"
     EOT
 
     chroot "${ROOT_MOUNT_DIR}" /bin/bash -c "ssh-keyscan -p 22 "${NODE_IP}" >> /home/shoreline/.ssh/known_hosts"
