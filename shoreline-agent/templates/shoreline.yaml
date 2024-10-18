@@ -177,7 +177,7 @@ spec:
               {{- if ne $caPemstore "disable" }}
             - mountPath: {{ $caPemstore }}
               name: ca-pemstore
-              readOnly: false
+              readOnly: {{ default false .Values.agent.resource.volumeMounts.caPemstoreReadOnly }}
               subPath: ca.pem
               {{- end }}
             {{- end }}
@@ -209,6 +209,9 @@ spec:
       {{- if .Values.agent.resource.imageCredentials }}
       imagePullSecrets:
         - name: {{ .Values.global.name }}-agent
+      {{- else if  .Values.agent.resource.imageCredentialK8sSecret }}
+      imagePullSecrets:
+        - name: {{ .Values.agent.resource.imageCredentialK8sSecret }}
       {{- end }}
       serviceAccountName: {{ tpl .Values.global.namespace . }}-sa
       {{- if .Values.agent.resource.nodeSelector }}
@@ -232,8 +235,13 @@ spec:
           name: varlibdockercontainers
         {{- end }}
         {{- if .Values.global.certificate }}
+          {{- if eq .Values.global.certificateVolumeType "secret" }}
+        - secret:
+            secretName: ca-pemstore
+          {{- else }}
         - configMap:
             name: ca-pemstore
+          {{- end }}
           name: ca-pemstore
         {{- end }}
         {{- if ne $hostSshVolume "disable" }}
