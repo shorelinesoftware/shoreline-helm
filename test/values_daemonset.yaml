@@ -8,13 +8,6 @@ global:
     TEST CERTIFICATE
     -----END CERTIFICATE-----
 agent:
-  podLabels:
-    azure.workload.identity/use: "true"
-  serviceaccount:
-    annotations:
-      iam-blab-bla: something
-      oci.oraclecloud.com/policy: something
-      azure.workload.identity/use: "true"
   resource:
     image: "shorelinesoftware/agent"
     tag: "release-3.5.32"
