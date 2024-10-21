@@ -8,12 +8,14 @@ global:
     TEST CERTIFICATE
     -----END CERTIFICATE-----
 agent:
-  serviceaccount:
-    annotations:
-      iam-blab-bla: something
   resource:
     image: "shorelinesoftware/agent"
     tag: "release-3.5.32"
+    # imageCredentials:
+    #   server: "https://docker.io"
+    #   username: "un"
+    #   password: "pw"
+    # imageCredentialK8sSecret: "pre-existing-k8s-secret"
     nodeSelector:
       eks.amazonaws.com/nodegroup: ng-1
     tolerations:

@@ -11,4 +11,4 @@ then
   FILE="values_deployment.yaml"
 fi
 
-helm template --debug shoreline-agent ../shoreline-agent -f ${FILE}
+helm template shoreline-agent ../shoreline-agent -f ${FILE} --debug
