@@ -9,7 +9,7 @@ global:
   # certificate: |
   #   -----BEGIN CERTIFICATE-----
   #   -----END CERTIFICATE-----
-  certificateVolumeType: "secret"
+  caPemstoreVolumeType: "secret"
 agent:
   serviceaccount:
     irsa: false
@@ -27,7 +27,7 @@ agent:
     #   server: "https://docker.io"
     #   username: "un"
     #   password: "pw"
-    # imageCredentialK8sSecret: "pre-existing-k8s-secret"
+    imageCredentialK8sSecret: "pre-existing-k8s-secret"
     hostAction: "enable"
     resources:
       limits:
@@ -37,6 +37,7 @@ agent:
         cpu: "500m"
         memory: "500Mi"
     volumeMounts:
+      caPemstoreReadOnly: true
       mountPaths:
         varlog: "/var/log"
         varlibdockercontainers: "/var/lib/docker/containers"

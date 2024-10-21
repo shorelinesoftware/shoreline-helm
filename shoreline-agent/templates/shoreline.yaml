@@ -235,7 +235,7 @@ spec:
           name: varlibdockercontainers
         {{- end }}
         {{- if .Values.global.certificate }}
-          {{- if eq .Values.global.certificateVolumeType "secret" }}
+          {{- if eq (default "configMap" .Values.global.caPemstoreVolumeType) "secret" }}
         - secret:
             secretName: ca-pemstore
           {{- else }}

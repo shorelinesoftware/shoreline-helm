@@ -38,8 +38,6 @@ agent:
     environmentVariables:
       - name: TEST_ENV_VAR
         value: "test_env_var"
-    volumeMounts:
-      caPemstoreReadOnly: true
 scraperConfig:
   enable: true
   exporters:
