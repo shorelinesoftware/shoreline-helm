@@ -9,6 +9,13 @@ global:
     -----END CERTIFICATE-----
 agent:
   resource:
+    serviceaccount:
+      annotations:
+      iam-blab-bla: something
+      oci.oraclecloud.com/policy: something
+      azure.workload.identity/use: "true"
+    podLabels:
+      azure.workload.identity/use: "true"
     image: "shorelinesoftware/agent"
     tag: "release-3.5.32"
     # imageCredentials:
