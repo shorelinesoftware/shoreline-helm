@@ -9,18 +9,15 @@ global:
   # certificate: |
   #   -----BEGIN CERTIFICATE-----
   #   -----END CERTIFICATE-----
-  caPemstoreVolumeType: "secret"
+  # caPemstoreVolumeType: "secret"
 agent:
   serviceaccount:
     irsa: false
     aws_role: ""
     runAsNonRoot: false
-    annotations:
-      iam-blab-bla: something
-      oci.oraclecloud.com/policy: something
-      azure.workload.identity/use: "true"
-  podLabels:
-    azure.workload.identity/use: "true"
+  # podLabels:
+  #   name1: value1
+  #   name2: value2
   resource:
     kind: "DaemonSet"
     replicas: 1
@@ -30,7 +27,7 @@ agent:
     #   server: "https://docker.io"
     #   username: "un"
     #   password: "pw"
-    imageCredentialK8sSecret: "pre-existing-k8s-secret"
+    # imageCredentialK8sSecret: "pre-existing-k8s-secret"
     hostAction: "enable"
     resources:
       limits:
@@ -40,7 +37,7 @@ agent:
         cpu: "500m"
         memory: "500Mi"
     volumeMounts:
-      caPemstoreReadOnly: true
+      caPemstoreReadOnly: false
       mountPaths:
         varlog: "/var/log"
         varlibdockercontainers: "/var/lib/docker/containers"
