@@ -2,9 +2,9 @@ global:
   name: "shoreline"
   namespace: "{{ ternary \"shoreline\" .Release.Namespace (eq .Release.Namespace \"default\") }}"
   customer_id: ""
-  customer_secret: "secret"
+  # customer_secret: "secret"
   customer_endpoint: ""
-  cloud_provider: "aws" # aws/azure/gcp
+  # cloud_provider: "aws" # aws/azure/gcp
   internal: disable
   # certificate: |
   #   -----BEGIN CERTIFICATE-----
@@ -31,11 +31,11 @@ agent:
     hostAction: "enable"
     resources:
       limits:
-        cpu: "500m"
-        memory: "500Mi"
+        cpu: "350m"
+        memory: "400Mi"
       requests:
-        cpu: "500m"
-        memory: "500Mi"
+        cpu: "350m"
+        memory: "400Mi"
     volumeMounts:
       caPemstoreReadOnly: false
       mountPaths:
@@ -71,11 +71,11 @@ agent:
             periodSeconds: 15
   priorityClassName: ""
 scraperConfig:
-  enable: true
-  exporters:
-    scrapers:
-      node_exporter:
-        namespace: "monitoring"
-        regex: "node-exporter"
-      envoy:
-        enabled: true
+  enable: false
+  # exporters:
+  #   scrapers:
+  #     node_exporter:
+  #       namespace: "monitoring"
+  #       regex: "node-exporter"
+  #     envoy:
+  #       enabled: true

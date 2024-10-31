@@ -1,4 +1,7 @@
 
+27.5.0
+- customer_secret to be optional
+
 27.1.0
 - Host level action update
 
