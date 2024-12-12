@@ -1,4 +1,7 @@
 
+27.6.0
+- initContainersImage to be customizable
+
 27.5.0
 - customer_secret to be optional
 
