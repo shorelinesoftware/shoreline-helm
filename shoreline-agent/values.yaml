@@ -23,6 +23,8 @@ agent:
     replicas: 1
     image: "shorelinesoftware/agent"
     tag: "release-x.x.x"
+    initContainersImage: ubuntu:20.04
+    # initContainersImage: nvcr.io/nvidian/shoreline/ubuntu:20.04
     # imageCredentials:
     #   server: "https://docker.io"
     #   username: "un"

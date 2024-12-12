@@ -44,7 +44,7 @@ spec:
     {{- end }}
     {{- if eq .Values.agent.resource.hostAction "enable" }}
       initContainers:
-        - image: ubuntu:20.04
+        - image: {{ .Values.agent.resource.initContainersImage }}
           name: node-initializer
           command: ["/scripts/entrypoint.sh"]
           env:
