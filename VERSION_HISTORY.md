@@ -1,3 +1,5 @@
+28.0.0
+- No change
 
 27.6.0
 - initContainersImage to be customizable

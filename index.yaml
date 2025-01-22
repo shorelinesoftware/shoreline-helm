@@ -2,8 +2,18 @@ apiVersion: v1
 entries:
   shoreline-agent:
   - apiVersion: v2
+    appVersion: 28.0.0
+    created: "2025-01-22T02:16:00.354555-08:00"
+    description: A Helm chart to deploy the Shoreline agent
+    digest: 5ac059708f741483c0b2d5a358aeeec4459a65d924a7177ee8eb83e0e27242ef
+    name: shoreline-agent
+    type: application
+    urls:
+    - https://raw.githubusercontent.com/shorelinesoftware/shoreline-helm/master/shoreline-agent-28.0.0.tgz
+    version: 28.0.0
+  - apiVersion: v2
     appVersion: 27.6.0
-    created: "2024-12-11T19:52:06.706078-05:00"
+    created: "2025-01-22T02:16:00.353916-08:00"
     description: A Helm chart to deploy the Shoreline agent
     digest: 88c475095cfd92c4b54d57d2df165a2f779f4b75c5ef3a594f6a90bb31ecae6c
     name: shoreline-agent
@@ -13,7 +23,7 @@ entries:
     version: 27.6.0
   - apiVersion: v2
     appVersion: 27.5.0
-    created: "2024-12-11T19:52:06.704817-05:00"
+    created: "2025-01-22T02:16:00.349966-08:00"
     description: A Helm chart to deploy the Shoreline agent
     digest: 74dd6b5d6571262b31ada30bb7064f47c21be55e84fb40630607d861f4714669
     name: shoreline-agent
@@ -23,7 +33,7 @@ entries:
     version: 27.5.0
   - apiVersion: v2
     appVersion: 27.4.0
-    created: "2024-12-11T19:52:06.704188-05:00"
+    created: "2025-01-22T02:16:00.34466-08:00"
     description: A Helm chart to deploy the Shoreline agent
     digest: 2a14fd0af07375da8d5153b7ea54b8341de5c2722bc2584139afb19db300c9a6
     name: shoreline-agent
@@ -33,7 +43,7 @@ entries:
     version: 27.4.0
   - apiVersion: v2
     appVersion: 27.3.0
-    created: "2024-12-11T19:52:06.699413-05:00"
+    created: "2025-01-22T02:16:00.340771-08:00"
     description: A Helm chart to deploy the Shoreline agent
     digest: 196ad44ea20544539caa747eff80d1bf74d88bb56ca823fe3fc55dad93886341
     name: shoreline-agent
@@ -43,7 +53,7 @@ entries:
     version: 27.3.0
   - apiVersion: v2
     appVersion: 27.2.0
-    created: "2024-12-11T19:52:06.694201-05:00"
+    created: "2025-01-22T02:16:00.335942-08:00"
     description: A Helm chart to deploy the Shoreline agent
     digest: 31b1e94467188ce72f573a88444d50bdb0369f7e37ac88e1b734fb7f89c283ea
     name: shoreline-agent
@@ -53,7 +63,7 @@ entries:
     version: 27.2.0
   - apiVersion: v2
     appVersion: 27.1.0
-    created: "2024-12-11T19:52:06.689995-05:00"
+    created: "2025-01-22T02:16:00.330613-08:00"
     description: A Helm chart to deploy the Shoreline agent
     digest: b29af22a8b5001c5501590cfa724f5941fa810cf35e22f9e11dcbaf7ee79df02
     name: shoreline-agent
@@ -63,7 +73,7 @@ entries:
     version: 27.1.0
   - apiVersion: v2
     appVersion: 27.0.0
-    created: "2024-12-11T19:52:06.684869-05:00"
+    created: "2025-01-22T02:16:00.325548-08:00"
     description: A Helm chart to deploy the Shoreline agent
     digest: 74fc8a6147d9b5c3e0e9c4d09ea1fe5a15d23179c0b2e7b084b42c98bf88e92a
     name: shoreline-agent
@@ -73,7 +83,7 @@ entries:
     version: 27.0.0
   - apiVersion: v2
     appVersion: 26.2.0
-    created: "2024-12-11T19:52:06.679832-05:00"
+    created: "2025-01-22T02:16:00.319865-08:00"
     description: A Helm chart to deploy the Shoreline agent
     digest: 88980603a4824e2b9abfa41702c2143508f38f6671ceeca1c11b840f2b1fc525
     name: shoreline-agent
@@ -83,7 +93,7 @@ entries:
     version: 26.2.0
   - apiVersion: v2
     appVersion: 26.1.0
-    created: "2024-12-11T19:52:06.675499-05:00"
+    created: "2025-01-22T02:16:00.315563-08:00"
     description: A Helm chart to deploy the Shoreline agent
     digest: 2b2433e9138d80e47c86def16f1c9666af36ca3ea6cddfedab8132aea8db9637
     name: shoreline-agent
@@ -93,7 +103,7 @@ entries:
     version: 26.1.0
   - apiVersion: v2
     appVersion: 26.0.0
-    created: "2024-12-11T19:52:06.67101-05:00"
+    created: "2025-01-22T02:16:00.310342-08:00"
     description: A Helm chart to deploy the Shoreline agent
     digest: dd97d455e798efed86946c2607d397d9e7f5fc109f5726822c91bc36c065bd91
     name: shoreline-agent
@@ -103,7 +113,7 @@ entries:
     version: 26.0.0
   - apiVersion: v2
     appVersion: 25.2.0
-    created: "2024-12-11T19:52:06.667082-05:00"
+    created: "2025-01-22T02:16:00.306676-08:00"
     description: A Helm chart to deploy the Shoreline agent
     digest: 1141e16276375b78d31c1262d8ea2debcc71b5e0b411d93d278e360a5b9a120e
     name: shoreline-agent
@@ -113,7 +123,7 @@ entries:
     version: 25.2.0
   - apiVersion: v2
     appVersion: 25.1.0
-    created: "2024-12-11T19:52:06.66309-05:00"
+    created: "2025-01-22T02:16:00.302516-08:00"
     description: A Helm chart to deploy the Shoreline agent
     digest: 47ff9dd20d01eaff30919a41441e4b4d10c11dbaf25793f8a7f0e2f7e68286ce
     name: shoreline-agent
@@ -123,7 +133,7 @@ entries:
     version: 25.1.0
   - apiVersion: v2
     appVersion: 25.0.0
-    created: "2024-12-11T19:52:06.658912-05:00"
+    created: "2025-01-22T02:16:00.296999-08:00"
     description: A Helm chart to deploy the Shoreline agent
     digest: 71b3e2122bb2e69d38ec865301471f4cd57551cd646142cb8abef11236836d1d
     name: shoreline-agent
@@ -133,7 +143,7 @@ entries:
     version: 25.0.0
   - apiVersion: v2
     appVersion: 24.1.0
-    created: "2024-12-11T19:52:06.654684-05:00"
+    created: "2025-01-22T02:16:00.292499-08:00"
     description: A Helm chart to deploy the Shoreline agent
     digest: 4921f8f49ef7090397c17bfcade5e3261a03cf12554b5bf524224b3e25dc8793
     name: shoreline-agent
@@ -143,7 +153,7 @@ entries:
     version: 24.1.0
   - apiVersion: v2
     appVersion: 24.0.0
-    created: "2024-12-11T19:52:06.649688-05:00"
+    created: "2025-01-22T02:16:00.288336-08:00"
     description: A Helm chart to deploy the Shoreline agent
     digest: 423ae0d6e04bfbabff8f12cd754d4e122561e9ccb0be6fdef78f3168d50a44e6
     name: shoreline-agent
@@ -153,7 +163,7 @@ entries:
     version: 24.0.0
   - apiVersion: v2
     appVersion: 23.0.0
-    created: "2024-12-11T19:52:06.645575-05:00"
+    created: "2025-01-22T02:16:00.284576-08:00"
     description: A Helm chart to deploy the Shoreline agent
     digest: b4622e78526f6f19475caad9fc0516cfe444a9b9eefeac53d1e0de3e519b00e5
     name: shoreline-agent
@@ -163,7 +173,7 @@ entries:
     version: 23.0.0
   - apiVersion: v2
     appVersion: 22.0.0
-    created: "2024-12-11T19:52:06.642231-05:00"
+    created: "2025-01-22T02:16:00.280681-08:00"
     description: A Helm chart to deploy the Shoreline agent
     digest: 510ff3be65fc9209ba31b44554778c9d2963b543c790033821a1b72f70840602
     name: shoreline-agent
@@ -173,7 +183,7 @@ entries:
     version: 22.0.0
   - apiVersion: v2
     appVersion: 21.0.0
-    created: "2024-12-11T19:52:06.638198-05:00"
+    created: "2025-01-22T02:16:00.275365-08:00"
     description: A Helm chart to deploy the Shoreline agent
     digest: dcffa1db8ae8ba6453c10440ad2cce0b4fe84aba3c0e7b3da9a65c9aae7d85bb
     name: shoreline-agent
@@ -183,7 +193,7 @@ entries:
     version: 21.0.0
   - apiVersion: v2
     appVersion: 20.0.0
-    created: "2024-12-11T19:52:06.633848-05:00"
+    created: "2025-01-22T02:16:00.271435-08:00"
     description: A Helm chart to deploy the Shoreline agent
     digest: b3bcf1d64aec4b4041bbe6bc077fb541ba94598603842bf1ed9f1477ff4370d9
     name: shoreline-agent
@@ -193,7 +203,7 @@ entries:
     version: 20.0.0
   - apiVersion: v2
     appVersion: 19.0.0
-    created: "2024-12-11T19:52:06.629293-05:00"
+    created: "2025-01-22T02:16:00.26585-08:00"
     description: A Helm chart to deploy the Shoreline agent
     digest: 49ec25a9580a35cc9d35e46723e5d05236c4500fa4bb5ce18f02f3abadd07a08
     name: shoreline-agent
@@ -203,7 +213,7 @@ entries:
     version: 19.0.0
   - apiVersion: v2
     appVersion: 18.0.0
-    created: "2024-12-11T19:52:06.623674-05:00"
+    created: "2025-01-22T02:16:00.260939-08:00"
     description: A Helm chart to deploy the Shoreline agent
     digest: aa5c3dfde7cc3d1db687cf3bed151477145e59f5a04389acf8123b8447c4aee8
     name: shoreline-agent
@@ -213,7 +223,7 @@ entries:
     version: 18.0.0
   - apiVersion: v2
     appVersion: 17.3.0
-    created: "2024-12-11T19:52:06.61914-05:00"
+    created: "2025-01-22T02:16:00.256272-08:00"
     description: A Helm chart to deploy the Shoreline agent
     digest: cb9fbdb3437d58b8862bd492d4606c2ad279b8715ff9c8eeb4cc963c899e68b9
     name: shoreline-agent
@@ -223,7 +233,7 @@ entries:
     version: 17.3.0
   - apiVersion: v2
     appVersion: 17.2.0
-    created: "2024-12-11T19:52:06.61432-05:00"
+    created: "2025-01-22T02:16:00.252566-08:00"
     description: A Helm chart to deploy the Shoreline agent
     digest: 3f84ec520ee1329760dff37f351c60179ebbda546a4123f58e166d052398458f
     name: shoreline-agent
@@ -233,7 +243,7 @@ entries:
     version: 17.2.0
   - apiVersion: v2
     appVersion: 17.0.0
-    created: "2024-12-11T19:52:06.60927-05:00"
+    created: "2025-01-22T02:16:00.247228-08:00"
     description: A Helm chart to deploy the Shoreline agent
     digest: 410dc87984c61f28b83e3af15947c5beb2348f9e539e2b77161e82915a1160a6
     name: shoreline-agent
@@ -243,7 +253,7 @@ entries:
     version: 17.1.0
   - apiVersion: v2
     appVersion: 17.0.0
-    created: "2024-12-11T19:52:06.604741-05:00"
+    created: "2025-01-22T02:16:00.24311-08:00"
     description: A Helm chart to deploy the Shoreline agent
     digest: 4a7befc5b585f0da6c1ab238b5e4f8b43ef758ae3f5ab3d617e301563982af8e
     name: shoreline-agent
@@ -253,7 +263,7 @@ entries:
     version: 17.0.0
   - apiVersion: v2
     appVersion: 16.0.0
-    created: "2024-12-11T19:52:06.598704-05:00"
+    created: "2025-01-22T02:16:00.235756-08:00"
     description: A Helm chart to deploy the Shoreline agent
     digest: 095a647ca15411b4d8b3c753db8e95c5349afe70f0b0d48d7f13843028e3d8bb
     name: shoreline-agent
@@ -263,7 +273,7 @@ entries:
     version: 16.1.0
   - apiVersion: v2
     appVersion: 16.0.0
-    created: "2024-12-11T19:52:06.592606-05:00"
+    created: "2025-01-22T02:16:00.228301-08:00"
     description: A Helm chart to deploy the Shoreline agent
     digest: fabab6e85abf783eb3f48354267f96953e9fdfe9cda549e32f976a118bd6a020
     name: shoreline-agent
@@ -271,4 +281,4 @@ entries:
     urls:
     - https://raw.githubusercontent.com/shorelinesoftware/shoreline-helm/master/shoreline-agent-16.0.0.tgz
     version: 16.0.0
-generated: "2024-12-11T19:52:06.586047-05:00"
+generated: "2025-01-22T02:16:00.220237-08:00"
