@@ -1,5 +1,13 @@
+28.1.0
+- Additional clusterrole for agent.serviceaccount.enable_debug_permission=true
+- imagePullPolicy: Always for initContainer
+
 28.0.0
 - No change
+
+27.7.0
+- Additional clusterrole for agent.serviceaccount.enable_debug_permission=true
+- imagePullPolicy: Always for initContainer
 
 27.6.0
 - initContainersImage to be customizable

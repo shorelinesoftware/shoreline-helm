@@ -37,6 +37,27 @@ rules:
   - get
   - list
   - watch
+{{- if .Values.agent.serviceaccount.enable_debug_permission }}
+- apiGroups:
+  - ""
+  resources:
+  - pods/ephemeralcontainers
+  verbs:
+  - get
+  - patch
+- apiGroups:
+  - ""
+  resources:
+  - pods/log
+  verbs:
+  - get
+- apiGroups:
+  - ""
+  resources:
+  - pods/attach
+  verbs:
+  - create
+{{- end }}
 - apiGroups:
   - apps
   resources:

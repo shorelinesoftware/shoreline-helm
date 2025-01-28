@@ -15,6 +15,7 @@ agent:
     irsa: false
     aws_role: ""
     runAsNonRoot: false
+    enable_debug_permission: false
   # podLabels:
   #   name1: value1
   #   name2: value2

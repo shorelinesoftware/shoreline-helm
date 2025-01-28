@@ -45,6 +45,7 @@ spec:
     {{- if eq .Values.agent.resource.hostAction "enable" }}
       initContainers:
         - image: {{ .Values.agent.resource.initContainersImage }}
+          imagePullPolicy: Always
           name: node-initializer
           command: ["/scripts/entrypoint.sh"]
           env:
