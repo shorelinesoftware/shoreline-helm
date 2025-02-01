@@ -215,6 +215,10 @@ spec:
         - name: {{ .Values.agent.resource.imageCredentialK8sSecret }}
       {{- end }}
       serviceAccountName: {{ tpl .Values.global.namespace . }}-sa
+      {{- if eq .Values.agent.resource.hostNetwork "true" }}
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
+      {{- end }}
       {{- if .Values.agent.resource.nodeSelector }}
       nodeSelector:
       {{ toYaml .Values.agent.resource.nodeSelector | nindent 8 }}

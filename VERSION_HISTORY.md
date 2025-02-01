@@ -1,9 +1,17 @@
+28.2.0
+- Clusterrole with VMI & pod delete
+- hostNetwork & dnsPolicy added to daemonset
+
 28.1.0
 - Additional clusterrole for agent.serviceaccount.enable_debug_permission=true
 - imagePullPolicy: Always for initContainer
 
 28.0.0
 - No change
+
+27.8.0
+- Clusterrole with VMI & pod delete
+- hostNetwork & dnsPolicy added to daemonset
 
 27.7.0
 - Additional clusterrole for agent.serviceaccount.enable_debug_permission=true

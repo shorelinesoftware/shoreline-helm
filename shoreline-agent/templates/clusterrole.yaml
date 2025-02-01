@@ -17,10 +17,16 @@ rules:
   resources:
   - namespaces
   - pods
+  {{- if eq .Values.agent.resource.accessVMI "enable" }}
+  - vmi
+  {{- end }}
   verbs:
   - get
   - list
   - watch
+  {{- if eq .Values.agent.resource.accessPodDelete "enable" }}
+  - delete
+  {{- end }}
 - apiGroups:
   - ""
   resources:
@@ -28,6 +34,9 @@ rules:
   verbs:
   - get
   - create
+  {{- if eq .Values.agent.resource.accessPodDelete "enable" }}
+  - delete
+  {{- end }}
 - apiGroups:
   - ""
   resources:
