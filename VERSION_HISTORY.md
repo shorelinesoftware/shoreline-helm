@@ -1,3 +1,8 @@
+28.3.0
+- SECRET env var is customizable.
+- additional mount & volumeMount options
+- hostAction option now includes varlog, varlibdockercontainers, host-ssh-volume.
+
 28.2.0
 - Clusterrole with VMI & pod delete
 - hostNetwork & dnsPolicy added to daemonset
@@ -8,6 +13,11 @@
 
 28.0.0
 - No change
+
+27.9.0
+- SECRET env var is customizable.
+- additional mount & volumeMount options
+- hostAction option now includes varlog, varlibdockercontainers, host-ssh-volume.
 
 27.8.0
 - Clusterrole with VMI & pod delete

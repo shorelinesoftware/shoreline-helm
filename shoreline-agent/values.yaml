@@ -39,6 +39,23 @@ agent:
       requests:
         cpu: "350m"
         memory: "400Mi"
+    custSecret:
+    - name: SECRET
+      valueFrom:
+        secretKeyRef:
+          name: customer-secret
+          key: customer-secret    
+    # environmentVariables:
+    # - name: NAME
+    #   value: "VALUE"
+    # additionalVolumes: 
+    # - name: my-extra-volume
+    #   configMap:
+    #     name: my-configmap
+    # additionalVolumeMounts:
+    # - name: my-extra-volume
+    #   mountPath: /etc/config
+    #   readOnly: true
     volumeMounts:
       caPemstoreReadOnly: false
       mountPaths:

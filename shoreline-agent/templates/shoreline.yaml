@@ -95,11 +95,9 @@ spec:
               value: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
             - name: K8S_TOKEN_PATH
               value: /var/run/secrets/kubernetes.io/serviceaccount/token
-            - name: SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: customer-secret
-                  key: customer-secret
+            {{- if .Values.agent.resource.custSecret }}
+            {{ toYaml .Values.agent.resource.custSecret | nindent 12 }}
+            {{- end }}
             - name: SECRETS_DIRECTORY
               value: "/agent/secrets"
             - name: CUSTOMER_ID
@@ -165,6 +163,7 @@ spec:
           {{- $onpremDataVolume  := .Values.agent.resource.volumeMounts.mountPaths.bareMetalDataVolume }}
           {{- if or (ne $varlog "disable") (ne $varlibdockercontainers "disable") (ne $caPemstore "disable") (ne $hostSshVolume "disable") (ne $scraperConfig "disable") (ne $onpremDataVolume "disable") }}
           volumeMounts:
+            {{- if eq .Values.agent.resource.hostAction "enable" }}
             {{- if ne $varlog "disable" }}
             - mountPath: {{ $varlog }}
               name: varlog
@@ -174,6 +173,12 @@ spec:
               name: varlibdockercontainers
               readOnly: true
             {{- end }}
+            {{- if ne $hostSshVolume "disable" }}
+            - mountPath: {{ $hostSshVolume }}
+              name: host-ssh-volume
+              readOnly: true
+            {{- end }}
+            {{- end }}
             {{- if .Values.global.certificate }}
               {{- if ne $caPemstore "disable" }}
             - mountPath: {{ $caPemstore }}
@@ -181,11 +186,6 @@ spec:
               readOnly: {{ default false .Values.agent.resource.volumeMounts.caPemstoreReadOnly }}
               subPath: ca.pem
               {{- end }}
-            {{- end }}
-            {{- if ne $hostSshVolume "disable" }}
-            - mountPath: {{ $hostSshVolume }}
-              name: host-ssh-volume
-              readOnly: true
             {{- end }}
             {{- if ne $scraperConfig "disable" }}
             - mountPath: {{ $scraperConfig }}
@@ -196,6 +196,9 @@ spec:
             - mountPath: {{ $onpremDataVolume }}
               name: onprem-data-volume
               readOnly: false
+            {{- end }}
+            {{- if .Values.agent.resource.additionalVolumeMounts }}
+            {{- toYaml .Values.agent.resource.additionalVolumeMounts | nindent 12 }}
             {{- end }}
             {{- if .Values.agent.serviceaccount.runAsNonRoot }}
             - mountPath: /agent/secrets
@@ -229,16 +232,6 @@ spec:
       {{- end }}
       terminationGracePeriodSeconds: 30
       volumes:
-        {{- if ne $varlog "disable" }}
-        - hostPath:
-            path: {{ $varlog }}
-          name: varlog
-        {{- end }}
-        {{- if ne $varlibdockercontainers "disable" }}
-        - hostPath:
-            path: {{ $varlibdockercontainers }}
-          name: varlibdockercontainers
-        {{- end }}
         {{- if .Values.global.certificate }}
           {{- if eq (default "configMap" .Values.global.caPemstoreVolumeType) "secret" }}
         - secret:
@@ -248,12 +241,6 @@ spec:
             name: ca-pemstore
           {{- end }}
           name: ca-pemstore
-        {{- end }}
-        {{- if ne $hostSshVolume "disable" }}
-        - name: host-ssh-volume
-          hostPath:
-            path: /home/{{ .Values.global.name }}/.ssh
-            type: DirectoryOrCreate
         {{- end }}
         - name: scraper-config
           configMap:
@@ -269,6 +256,22 @@ spec:
             type: DirectoryOrCreate
         {{- end }}
         {{- if eq .Values.agent.resource.hostAction "enable" }}
+        {{- if ne $varlog "disable" }}
+        - hostPath:
+            path: {{ $varlog }}
+          name: varlog
+        {{- end }}
+        {{- if ne $varlibdockercontainers "disable" }}
+        - hostPath:
+            path: {{ $varlibdockercontainers }}
+          name: varlibdockercontainers
+        {{- end }}
+        {{- if ne $hostSshVolume "disable" }}
+        - name: host-ssh-volume
+          hostPath:
+            path: /home/{{ .Values.global.name }}/.ssh
+            type: DirectoryOrCreate
+        {{- end }}
         - name: root-mount
           hostPath:
             path: /
@@ -276,6 +279,9 @@ spec:
           configMap:
             name: entrypoint
             defaultMode: 0744
+        {{- end }}
+        {{- if .Values.agent.resource.additionalVolumes }}
+        {{- toYaml .Values.agent.resource.additionalVolumes | nindent 8 }}
         {{- end }}
       {{- if eq .Values.agent.resource.kind "Deployment" }}
       affinity:
