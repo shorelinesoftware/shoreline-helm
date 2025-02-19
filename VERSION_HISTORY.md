@@ -1,3 +1,6 @@
+28.4.0
+- Clusterrole update with VMI
+
 28.3.0
 - SECRET env var is customizable.
 - additional mount & volumeMount options

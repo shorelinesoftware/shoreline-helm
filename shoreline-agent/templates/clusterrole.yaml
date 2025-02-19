@@ -18,7 +18,7 @@ rules:
   - namespaces
   - pods
   {{- if eq .Values.agent.resource.accessVMI "enable" }}
-  - vmi
+  - virtualmachineinstances
   {{- end }}
   verbs:
   - get
@@ -27,6 +27,17 @@ rules:
   {{- if eq .Values.agent.resource.accessPodDelete "enable" }}
   - delete
   {{- end }}
+{{- if eq .Values.agent.resource.accessVMI "enable" }}
+- apiGroups:
+  - "kubevirt.io"
+  resources: 
+  - virtualmachineinstances
+  verbs: 
+  - get
+  - list
+  - watch
+  - delete
+{{- end }}
 - apiGroups:
   - ""
   resources:
