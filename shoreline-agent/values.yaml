@@ -26,10 +26,17 @@ agent:
     tag: "release-x.x.x"
     initContainersImage: ubuntu:20.04
     # initContainersImage: nvcr.io/nvidian/shoreline/ubuntu:20.04
+    # hostNetwork: "true"
+    # accessVMI: "enable"
+    # accessPodDelete: "enable"
+    # podAnnotations:
+    #     additional-pod-annotation: "true"
     # imageCredentials:
     #   server: "https://docker.io"
     #   username: "un"
     #   password: "pw"
+    #   imagePullSecrets:
+    #   - name: additional-secret
     # imageCredentialK8sSecret: "pre-existing-k8s-secret"
     hostAction: "enable"
     resources:

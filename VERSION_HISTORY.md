@@ -1,3 +1,6 @@
+28.5.0
+- Additional imagePullSecrets can be added.
+
 28.4.0
 - Clusterrole update with VMI
 

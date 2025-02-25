@@ -213,6 +213,9 @@ spec:
       {{- if .Values.agent.resource.imageCredentials }}
       imagePullSecrets:
         - name: {{ .Values.global.name }}-agent
+      {{- if .Values.agent.resource.imageCredentials.imagePullSecrets }}
+      {{ toYaml .Values.agent.resource.imageCredentials.imagePullSecrets | nindent 8 }}
+      {{- end }}
       {{- else if  .Values.agent.resource.imageCredentialK8sSecret }}
       imagePullSecrets:
         - name: {{ .Values.agent.resource.imageCredentialK8sSecret }}
