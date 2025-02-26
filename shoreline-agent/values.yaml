@@ -3,6 +3,7 @@ global:
   namespace: "{{ ternary \"shoreline\" .Release.Namespace (eq .Release.Namespace \"default\") }}"
   customer_id: ""
   # customer_secret: "secret"
+  # customer_secret_filepath: "secret file path"
   customer_endpoint: ""
   # cloud_provider: "aws" # aws/azure/gcp
   internal: disable

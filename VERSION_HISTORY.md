@@ -1,3 +1,8 @@
+28.6.0
+- customer_secret_filepath option added. This will add volume and volumeMount for '/config' and SECRET_FILEPATH env var. 
+  - This will override SECRET env var.
+  - Currently supported for release-27.1.48-hf01 only.
+
 28.5.0
 - Additional imagePullSecrets can be added.
 
