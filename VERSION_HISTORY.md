@@ -1,3 +1,6 @@
+28.7.0
+- Removed volumeMount for '/config' for customer_secret_filepath, as NVault will create volumeMount as part of secret file pull.
+
 28.6.0
 - customer_secret_filepath option added. This will add volume and volumeMount for '/config' and SECRET_FILEPATH env var. 
   - This will override SECRET env var.

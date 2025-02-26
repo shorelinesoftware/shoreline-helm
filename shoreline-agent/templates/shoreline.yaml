@@ -200,10 +200,6 @@ spec:
               name: onprem-data-volume
               readOnly: false
             {{- end }}
-            {{- if .Values.global.customer_secret_filepath }}
-            - name: config-data
-              mountPath: /config
-            {{- end }}
             {{- if .Values.agent.resource.additionalVolumeMounts }}
             {{- toYaml .Values.agent.resource.additionalVolumeMounts | nindent 12 }}
             {{- end }}
