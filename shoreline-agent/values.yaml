@@ -12,6 +12,9 @@ global:
   #   -----END CERTIFICATE-----
   # caPemstoreVolumeType: "secret"
 agent:
+  # namespaceMetadata:
+  #   labels:
+  #     name: value
   serviceaccount:
     irsa: false
     aws_role: ""

@@ -1,3 +1,6 @@
+28.8.0
+- Added option to add custom labels for namespace of agent
+
 28.7.0
 - Removed volumeMount for '/config' for customer_secret_filepath, as NVault will create volumeMount as part of secret file pull.
 
