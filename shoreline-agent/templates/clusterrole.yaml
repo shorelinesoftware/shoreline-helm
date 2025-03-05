@@ -98,5 +98,5 @@ rules:
   - watch
 {{- end }}
 {{- if .Values.clusterRoleRules }}
-{{ toYaml .Values.clusterRoleRules }}
+{{- toYaml .Values.clusterRoleRules }}
 {{- end }}

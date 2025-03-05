@@ -9,11 +9,11 @@ spec:
   maxReplicas: {{ .Values.agent.resource.hpaValues.maxReplicas }}
   metrics:
     {{- if .Values.agent.resource.hpaValues.metrics }}
-    {{ toYaml .Values.agent.resource.hpaValues.metrics | nindent 2 }}
+    {{- toYaml .Values.agent.resource.hpaValues.metrics | nindent 2 }}
     {{- end }}
   behavior:
     {{- if .Values.agent.resource.hpaValues.behavior }}
-    {{ toYaml .Values.agent.resource.hpaValues.behavior | nindent 4 }}
+    {{- toYaml .Values.agent.resource.hpaValues.behavior | nindent 4 }}
     {{- end }}
   scaleTargetRef:
     apiVersion: apps/v1

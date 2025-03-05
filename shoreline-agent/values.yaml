@@ -39,8 +39,8 @@ agent:
     #   server: "https://docker.io"
     #   username: "un"
     #   password: "pw"
-    #   imagePullSecrets:
-    #   - name: additional-secret
+    # imagePullSecrets:
+    # - name: additional-secret
     # imageCredentialK8sSecret: "pre-existing-k8s-secret"
     hostAction: "enable"
     resources:

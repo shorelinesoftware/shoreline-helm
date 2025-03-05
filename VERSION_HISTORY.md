@@ -1,3 +1,7 @@
+28.9.0
+- imageCredentials is optional.
+- Added trim to remove extra linebreaks.
+
 28.8.0
 - Added option to add custom labels for namespace of agent
 

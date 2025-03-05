@@ -12,5 +12,5 @@ rules:
   - get
   - list
 {{- if .Values.shorelineRoleRules }}
-{{ toYaml .Values.shorelineRoleRules }}
+{{- toYaml .Values.shorelineRoleRules }}
 {{- end }}

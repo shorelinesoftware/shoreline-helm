@@ -27,7 +27,7 @@ spec:
         {{- end }}
       {{- if .Values.agent.resource.podAnnotations }}
       annotations:
-      {{ toYaml .Values.agent.resource.podAnnotations | nindent 8 }}
+      {{- toYaml .Values.agent.resource.podAnnotations | nindent 8 }}
       {{- end }}
     spec:
     {{- if eq .Values.agent.resource.kind "StatefulSet" }}
@@ -99,7 +99,7 @@ spec:
             - name: SECRET_FILEPATH
               value: "{{ .Values.global.customer_secret_filepath }}"
             {{- else if .Values.agent.resource.custSecret }}
-            {{ toYaml .Values.agent.resource.custSecret | nindent 12 }}
+            {{- toYaml .Values.agent.resource.custSecret | nindent 12 }}
             {{- end }}
             - name: SECRETS_DIRECTORY
               value: "/agent/secrets"
@@ -116,7 +116,7 @@ spec:
               value: "error"
             {{- end }}
             {{- if .Values.agent.resource.environmentVariables }}
-            {{ toYaml .Values.agent.resource.environmentVariables | nindent 12 }}
+            {{- toYaml .Values.agent.resource.environmentVariables | nindent 12 }}
             {{- end }}
           image: >-
             {{ .Values.agent.resource.image }}:{{  .Values.agent.resource.tag }}
@@ -213,15 +213,17 @@ spec:
       {{- if .Values.agent.priorityClassName }}
       priorityClassName: {{ .Values.agent.priorityClassName }}
       {{- end }}
+      {{- if or .Values.agent.resource.imageCredentials .Values.agent.resource.imagePullSecrets .Values.agent.resource.imageCredentialK8sSecret }}
+      imagePullSecrets:
       {{- if .Values.agent.resource.imageCredentials }}
-      imagePullSecrets:
         - name: {{ .Values.global.name }}-agent
-      {{- if .Values.agent.resource.imageCredentials.imagePullSecrets }}
-      {{ toYaml .Values.agent.resource.imageCredentials.imagePullSecrets | nindent 8 }}
       {{- end }}
-      {{- else if  .Values.agent.resource.imageCredentialK8sSecret }}
-      imagePullSecrets:
+      {{- if .Values.agent.resource.imagePullSecrets }}
+      {{- toYaml .Values.agent.resource.imagePullSecrets | nindent 8 }}
+      {{- end }}
+      {{- if  .Values.agent.resource.imageCredentialK8sSecret }}
         - name: {{ .Values.agent.resource.imageCredentialK8sSecret }}
+      {{- end }}
       {{- end }}
       serviceAccountName: {{ tpl .Values.global.namespace . }}-sa
       {{- if eq .Values.agent.resource.hostNetwork "true" }}
@@ -230,11 +232,11 @@ spec:
       {{- end }}
       {{- if .Values.agent.resource.nodeSelector }}
       nodeSelector:
-      {{ toYaml .Values.agent.resource.nodeSelector | nindent 8 }}
+      {{- toYaml .Values.agent.resource.nodeSelector | nindent 8 }}
       {{- end }}
       {{- if .Values.agent.resource.tolerations }}
       tolerations:
-      {{ toYaml .Values.agent.resource.tolerations | nindent 6 }}
+      {{- toYaml .Values.agent.resource.tolerations | nindent 6 }}
       {{- end }}
       terminationGracePeriodSeconds: 30
       volumes:
