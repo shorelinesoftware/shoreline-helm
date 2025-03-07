@@ -43,6 +43,7 @@ agent:
     # - name: additional-secret
     # imageCredentialK8sSecret: "pre-existing-k8s-secret"
     hostAction: "enable"
+    readinessProbe: "disable"
     resources:
       limits:
         cpu: "350m"

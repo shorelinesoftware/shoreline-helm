@@ -1,3 +1,6 @@
+28.10.0
+- Option to disable readiness probe (default: disable)
+
 28.9.0
 - imageCredentials is optional.
 - Added trim to remove extra linebreaks.

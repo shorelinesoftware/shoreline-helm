@@ -121,6 +121,7 @@ spec:
           image: >-
             {{ .Values.agent.resource.image }}:{{  .Values.agent.resource.tag }}
           name: {{ .Values.global.name }}
+          {{- if eq .Values.agent.resource.readinessProbe "enable" }}
           readinessProbe:
             exec:
               command:
@@ -130,6 +131,7 @@ spec:
             initialDelaySeconds: 180
             periodSeconds: 120
             timeoutSeconds: 60
+          {{- end }}
           livenessProbe:
             exec:
               command:
