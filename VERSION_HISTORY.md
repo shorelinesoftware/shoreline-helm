@@ -1,3 +1,6 @@
+28.11.0
+- custom affinity enabled for daemonset
+
 28.10.0
 - Option to disable readiness probe (default: disable)
 

@@ -30,8 +30,12 @@ spec:
       {{- toYaml .Values.agent.resource.podAnnotations | nindent 8 }}
       {{- end }}
     spec:
-    {{- if eq .Values.agent.resource.kind "StatefulSet" }}
+    {{- if or (eq .Values.agent.resource.kind "StatefulSet") .Values.agent.resource.affinity }}
       affinity:
+    {{- if .Values.agent.resource.affinity }}
+    {{- toYaml .Values.agent.resource.affinity | nindent 8 }}
+    {{- end }}
+    {{- if eq .Values.agent.resource.kind "StatefulSet" }}
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
           - labelSelector:
@@ -41,6 +45,7 @@ spec:
                   values:
                   - {{ .Values.global.name }}
             topologyKey: "kubernetes.io/hostname"
+    {{- end }}
     {{- end }}
     {{- if eq .Values.agent.resource.hostAction "enable" }}
       initContainers:

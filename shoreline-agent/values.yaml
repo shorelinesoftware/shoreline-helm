@@ -42,6 +42,15 @@ agent:
     # imagePullSecrets:
     # - name: additional-secret
     # imageCredentialK8sSecret: "pre-existing-k8s-secret"
+    # affinity:
+    #   nodeAffinity:
+    #     requiredDuringSchedulingIgnoredDuringExecution:
+    #       nodeSelectorTerms:
+    #       - matchExpressions:
+    #         - key: key
+    #           operator: NotIn
+    #           values:
+    #           - value
     hostAction: "enable"
     readinessProbe: "disable"
     resources:
