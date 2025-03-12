@@ -1,3 +1,6 @@
+28.12.0
+- Updated clusterRoleRules
+
 28.11.0
 - custom affinity enabled for daemonset
 

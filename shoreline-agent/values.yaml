@@ -23,6 +23,14 @@ agent:
   # podLabels:
   #   name1: value1
   #   name2: value2
+  # clusterRoleRules:
+  #   - apiGroups:
+  #     - ""
+  #     resources:
+  #     - pods/log
+  #     verbs:
+  #     - get
+  #     - list
   resource:
     kind: "DaemonSet"
     replicas: 1

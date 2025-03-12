@@ -97,6 +97,6 @@ rules:
   - list
   - watch
 {{- end }}
-{{- if .Values.clusterRoleRules }}
-{{- toYaml .Values.clusterRoleRules }}
+{{- if .Values.agent.clusterRoleRules }}
+{{- toYaml .Values.agent.clusterRoleRules | nindent 0 }}
 {{- end }}
