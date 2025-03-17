@@ -1,7 +1,0 @@
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: {{ tpl .Values.global.namespace . }}
-  {{- if .Values.agent.namespaceMetadata }}
-  {{- toYaml .Values.agent.namespaceMetadata | nindent 2 }}
-  {{- end }}

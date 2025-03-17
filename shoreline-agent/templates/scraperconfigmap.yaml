@@ -129,4 +129,4 @@ data:
 kind: ConfigMap
 metadata:
   name: scraper-config
-  namespace: {{ tpl .Values.global.namespace . }}
+  namespace: {{ .Release.Namespace }}

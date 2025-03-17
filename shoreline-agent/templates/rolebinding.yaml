@@ -1,13 +1,13 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: {{ tpl .Values.global.namespace . }}-sa-view-role-binding
-  namespace: {{ tpl .Values.global.namespace . }}
+  name: {{ .Values.global.name }}-sa-view-role-binding
+  namespace: {{ .Release.Namespace }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
   name: {{ .Values.global.name }}-agent-role
 subjects:
 - kind: ServiceAccount
-  name: {{ tpl .Values.global.namespace . }}-sa
-  namespace: {{ tpl .Values.global.namespace . }}
+  name: {{ .Values.global.name }}-sa
+  namespace: {{ .Release.Namespace }}

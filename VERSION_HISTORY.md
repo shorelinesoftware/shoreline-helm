@@ -1,3 +1,6 @@
+28.13.0
+- Remove namespace from values file
+
 28.12.0
 - Updated clusterRoleRules
 

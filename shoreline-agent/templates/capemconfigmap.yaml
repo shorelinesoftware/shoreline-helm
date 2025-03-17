@@ -6,5 +6,5 @@ data:
 kind: ConfigMap
 metadata:
   name: ca-pemstore
-  namespace: {{ tpl .Values.global.namespace . }}
+  namespace: {{ .Release.Namespace }}
 {{- end }}
