@@ -1,6 +1,5 @@
 global:
   name: "shoreline"
-  namespace: "{{ ternary \"shoreline\" .Release.Namespace (eq .Release.Namespace \"default\") }}"
   customer_id: ""
   # customer_secret: "secret"
   # customer_secret_filepath: "secret file path"
@@ -12,9 +11,6 @@ global:
   #   -----END CERTIFICATE-----
   # caPemstoreVolumeType: "secret"
 agent:
-  # namespaceMetadata:
-  #   labels:
-  #     name: value
   serviceaccount:
     irsa: false
     aws_role: ""

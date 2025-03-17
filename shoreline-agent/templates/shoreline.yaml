@@ -4,7 +4,7 @@ metadata:
   labels:
     k8s-app: {{ .Values.global.name }}
   name: {{ .Values.global.name }}
-  namespace: {{ tpl .Values.global.namespace . }}
+  namespace: {{ .Release.Namespace }}
 spec:
   {{- if eq .Values.agent.resource.kind "Deployment" }}
   replicas: {{ .Values.agent.resource.replicas }}
@@ -232,7 +232,7 @@ spec:
         - name: {{ .Values.agent.resource.imageCredentialK8sSecret }}
       {{- end }}
       {{- end }}
-      serviceAccountName: {{ tpl .Values.global.namespace . }}-sa
+      serviceAccountName: {{ .Values.global.name }}-sa
       {{- if eq .Values.agent.resource.hostNetwork "true" }}
       hostNetwork: true
       dnsPolicy: ClusterFirstWithHostNet
