@@ -120,6 +120,8 @@ agent:
             periodSeconds: 15
   priorityClassName: ""
 scraperConfig:
+  # resource_discovery_config:
+  #   label_selector: "function-id"
   enable: false
   # exporters:
   #   scrapers:

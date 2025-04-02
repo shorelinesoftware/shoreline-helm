@@ -4,7 +4,11 @@ data:
   {{- if eq .Values.agent.resource.kind "StatefulSet" }}
     resource_discovery_config:
       discover_scope: cluster
-      label_selector: function-id
+      {{- if .Values.scraperConfig.resource_discovery_config }}
+        {{- if .Values.scraperConfig.resource_discovery_config.label_selector }}
+      label_selector: {{ .Values.scraperConfig.resource_discovery_config.label_selector }}
+        {{- end }}
+      {{- end }}
   {{- end }}
   {{- if .Values.scraperConfig.enable }}
     scrape_configs:
