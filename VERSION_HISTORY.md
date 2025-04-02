@@ -1,3 +1,6 @@
+28.13.0
+- Added 'label_selector: function-id' for scraperconfigmap for sts.
+
 28.12.0
 - Updated clusterRoleRules
 

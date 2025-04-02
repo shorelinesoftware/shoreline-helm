@@ -4,6 +4,7 @@ data:
   {{- if eq .Values.agent.resource.kind "StatefulSet" }}
     resource_discovery_config:
       discover_scope: cluster
+      label_selector: function-id
   {{- end }}
   {{- if .Values.scraperConfig.enable }}
     scrape_configs:
